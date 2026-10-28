@@ -71,9 +71,9 @@ public class Venta {
         sb.append(String.format("Venta %s | %s %s | Cliente: %s | Vendedor: %s%n", idVenta,
                 new SimpleDateFormat("dd/MM/yyyy").format(fecha), hora,
                 cliente.getNombreCompleto(), vendedor.getNombreCompleto()));
-        for (int i = 0; i < productosVendidos.size(); i++) {
-            sb.append(String.format("   %-22s x%-3d S/ %8.2f = S/ %9.2f%n", productosVendidos.get(i).getNombre(),
-                    cantidades.get(i), preciosUnitarios.get(i), cantidades.get(i) * preciosUnitarios.get(i)));
+        for (DetalleVenta d : getDetalles()) {
+            sb.append(String.format("   %-22s x%-3d S/ %8.2f = S/ %9.2f%n", d.getProducto().getNombre(),
+                    d.getCantidad(), d.getPrecioUnitario(), d.calcularSubtotal()));
         }
         sb.append(String.format("   Productos: %d | Total: S/ %.2f | Pago: %s | %s | Estado: %s",
                 cantidadProductos, montoTotal, metodoPago, tipoComprobante, estado));
@@ -110,6 +110,15 @@ public class Venta {
 
     public List<Double> getPreciosUnitarios() {
         return Collections.unmodifiableList(preciosUnitarios);
+    }
+
+    // Desglose de la venta: une las tres listas en una linea por producto
+    public List<DetalleVenta> getDetalles() {
+        List<DetalleVenta> detalles = new ArrayList<>();
+        for (int i = 0; i < productosVendidos.size(); i++) {
+            detalles.add(new DetalleVenta(productosVendidos.get(i), cantidades.get(i), preciosUnitarios.get(i)));
+        }
+        return detalles;
     }
 
     public double getMontoTotal() {
