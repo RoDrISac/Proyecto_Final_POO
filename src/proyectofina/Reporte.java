@@ -24,6 +24,7 @@ public class Reporte {
     private Date fechaGeneracion;
     private String tipo;
     private String contenido;
+    private File archivo;
     private final List<Venta> ventas;
     private final List<Inventario> inventario;
 
@@ -54,7 +55,7 @@ public class Reporte {
         if (contenido == null) {
             throw new IllegalStateException("Primero genere el reporte.");
         }
-        File archivo = new File(GestorArchivos.CARPETA_REPORTES, idReporte + "." + formato.toLowerCase());
+        archivo = new File(GestorArchivos.CARPETA_REPORTES, idReporte + "." + formato.toLowerCase());
         if (formato.equalsIgnoreCase("PDF")) {
             ArchivoPDF.escribir(archivo, Arrays.asList(contenido.split("\n")));
         } else {
@@ -126,6 +127,10 @@ public class Reporte {
 
     public String getTipo() {
         return tipo;
+    }
+
+    public File getArchivo() {
+        return archivo;
     }
 
     public String getContenido() {

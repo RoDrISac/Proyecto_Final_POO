@@ -4,6 +4,8 @@
  */
 package proyectofina;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -409,10 +411,24 @@ public class ProyectoFina {
             venta.setEstado("Concluido");
             System.out.println("Comprobante " + comprobante.getTipo() + " " + comprobante.getIdComprobante()
                     + " emitido en: " + comprobante.getArchivo().getPath());
+            abrirArchivo(comprobante.getArchivo());
         } catch (IOException e) {
             System.out.println("La venta se registro, pero no se pudo crear el PDF: " + e.getMessage());
         }
         return comprobante;
+    }
+
+    // Abre el archivo (PDF o TXT) con el programa predeterminado del sistema; si no se puede, basta con la ruta ya mostrada
+    static void abrirArchivo(File archivo) {
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
+                Desktop.getDesktop().open(archivo);
+            } else {
+                System.out.println("No se puede abrir el archivo automaticamente; abralo desde la ruta indicada.");
+            }
+        } catch (IOException e) {
+            System.out.println("No se pudo abrir el archivo: " + e.getMessage());
+        }
     }
 
     static void mostrarVentas() {
@@ -455,6 +471,7 @@ public class ProyectoFina {
         if (!formato.equals("No exportar")) {
             try {
                 reporte.exportar(formato);
+                abrirArchivo(reporte.getArchivo());
             } catch (IOException e) {
                 System.out.println("No se pudo exportar el reporte: " + e.getMessage());
             }

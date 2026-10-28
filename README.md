@@ -28,6 +28,7 @@ Administrador `ADM-2026`, Vendedor `VEN-2026`, Supervisor de almacén `SUP-2026`
 | `Producto` | Código, nombre, modelo, categoría, precio, descripción. `mostrarInfo()` |
 | `Inventario` | Hereda de Producto. Stock, stock mínimo, costo, fecha de ingreso. `actualizarStock()`, `calcularGananciaUnitaria()`, `estaDisponible()` |
 | `Venta` | Cliente, vendedor, productos/cantidades/precios, método de pago, tipo de comprobante. `agregarProducto()`, `calcularMontoTotal()`, `getResumenVenta()` |
+| `DetalleVenta` | Línea del desglose de una venta: producto, cantidad, precio unitario. `calcularSubtotal()` |
 | `Comprobante` | Boleta o recibo con IGV. `emitirPDF()`, `enviarPorCorreo()` |
 | `Reporte` | Inventario, stock bajo, ventas y más vendidos del mes. `generar()`, `exportar()` (PDF o TXT) |
 | `GestorArchivos`, `ArchivoPDF` | Manejo de archivos (S09): CSV de datos y archivos PDF |
@@ -43,8 +44,9 @@ Atributos agregados al diagrama porque los piden la S08 y la S10: `Producto.mode
 - Clientes: registro con validación (DNI de 8 dígitos, correo), listado e historial de compras.
 - Ventas: varios productos, verificación de stock, método de pago (efectivo, Yape, Plin, transferencia, tarjeta),
   confirmación, descuento automático del stock y comprobante PDF con numeración única (B001-/R001-).
-- Reimpresión de comprobantes.
-- Reportes: inventario, stock bajo, todas las ventas y productos más vendidos del mes, exportables a PDF o TXT.
+- Reimpresión de comprobantes. El PDF del comprobante se abre automáticamente al emitirlo.
+- Reportes: inventario, stock bajo, todas las ventas y productos más vendidos del mes, exportables a PDF o TXT
+  (el archivo exportado se abre automáticamente).
 - Usuarios: listado, registro y cambio de rol.
 
 ## Archivos que genera (carpeta `datos/`)
