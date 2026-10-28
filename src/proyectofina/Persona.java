@@ -33,6 +33,9 @@ public abstract class Persona {
     }
 
     public void setNombre(String nombre) {
+        if (nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("El nombre es obligatorio.");
+        }
         this.nombre = nombre;
     }
 
@@ -41,6 +44,9 @@ public abstract class Persona {
     }
 
     public void setApellido(String apellido) {
+        if (apellido == null || apellido.isBlank()) {
+            throw new IllegalArgumentException("El apellido es obligatorio.");
+        }
         this.apellido = apellido;
     }
 
@@ -49,6 +55,9 @@ public abstract class Persona {
     }
 
     public void setDni(String dni) {
+        if (dni == null || !dni.matches("\\d{8}")) {
+            throw new IllegalArgumentException("El DNI debe tener 8 digitos.");
+        }
         this.dni = dni;
     }
 }
