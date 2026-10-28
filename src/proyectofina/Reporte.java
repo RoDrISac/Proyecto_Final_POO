@@ -50,7 +50,7 @@ public class Reporte {
         return this;
     }
 
-    public void exportar(String formato) throws IOException {
+    public File exportar(String formato) throws IOException {
         if (contenido == null) {
             throw new IllegalStateException("Primero genere el reporte.");
         }
@@ -61,6 +61,7 @@ public class Reporte {
             GestorArchivos.escribirTexto(archivo, contenido);
         }
         System.out.println("Reporte exportado en: " + archivo.getPath());
+        return archivo;
     }
 
     private void reporteInventario(StringBuilder sb, boolean soloStockBajo) {
