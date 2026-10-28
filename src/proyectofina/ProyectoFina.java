@@ -109,8 +109,12 @@ public class ProyectoFina {
             clientes = GestorArchivos.cargarClientes();
             inventario = GestorArchivos.cargarInventario();
             ventas = GestorArchivos.cargarVentas(clientes, usuarios, inventario);
-        } catch (IOException | RuntimeException e) {
+        } catch (IOException e) {
+            // Si se siguiera con listas vacias, el siguiente guardado borraria los archivos
             System.out.println("No se pudieron leer los datos guardados: " + e.getMessage());
+            System.out.println("Cierre los programas que usen la carpeta " + GestorArchivos.CARPETA_DATOS
+                    + " y vuelva a intentarlo. No se modifico ningun archivo.");
+            System.exit(1);
         }
         if (usuarios.isEmpty()) { // primera ejecucion: usuarios iniciales
             usuarios.add(new Usuario("U001", "Admin", "Principal", "00000001", roles.get(0), "1234"));
@@ -162,11 +166,19 @@ public class ProyectoFina {
     static void registrarProducto() {
         System.out.println("--- Registrar producto ---");
         String id = leer("Codigo del producto: ");
-        if (id.isBlank() || buscarProducto(id) != null) {
-            System.out.println("El codigo esta vacio o ya existe.");
+        if (!id.matches("[A-Za-z0-9_-]+")) {
+            System.out.println("El codigo es obligatorio y solo puede tener letras, numeros, - y _.");
+            return;
+        }
+        if (buscarProducto(id) != null) {
+            System.out.println("Ya existe un producto con ese codigo.");
             return;
         }
         String nombre = leer("Nombre: ");
+        if (nombre.isBlank()) {
+            System.out.println("El nombre es obligatorio.");
+            return;
+        }
         String modelo = leer("Modelo: ");
         String categoria = leer("Categoria: ");
         String descripcion = leer("Descripcion: ");
@@ -194,6 +206,9 @@ public class ProyectoFina {
         double precio = leerOpcionalDecimal("Precio", p.getPrecio());
         double costo = leerOpcionalDecimal("Costo", p.getCosto());
         int stockMinimo = Integer.parseInt(leerOpcional("Stock minimo", String.valueOf(p.getStockMinimo())));
+        if (nombre.isBlank()) {
+            throw new IllegalArgumentException("El nombre es obligatorio.");
+        }
         if (precio < 0 || costo < 0 || stockMinimo < 0) {
             throw new IllegalArgumentException("Precio, costo y stock minimo no pueden ser negativos.");
         }
@@ -226,7 +241,11 @@ public class ProyectoFina {
             return;
         }
         int cantidad = leerEntero("Cantidad que ingresa: ", 1);
-        p.setCosto(leerOpcionalDecimal("Costo unitario", p.getCosto()));
+        double costo = leerOpcionalDecimal("Costo unitario", p.getCosto());
+        if (costo < 0) {
+            throw new IllegalArgumentException("El costo no puede ser negativo.");
+        }
+        p.setCosto(costo);
         p.actualizarStock(p.getStock() + cantidad);
         p.setFechaIngreso(new Date());
         guardarDatos();
@@ -452,10 +471,20 @@ public class ProyectoFina {
         }
         String nombre = leer("Nombre: ");
         String apellido = leer("Apellido: ");
+        if (nombre.isBlank() || apellido.isBlank()) {
+            System.out.println("El nombre y el apellido son obligatorios.");
+            return;
+        }
         String dni = leer("DNI: ");
         if (!dni.matches("\\d{8}")) {
             System.out.println("El DNI debe tener 8 digitos.");
             return;
+        }
+        for (Usuario otro : usuarios) {
+            if (otro.getDni().equals(dni)) {
+                System.out.println("Ya existe un usuario con el DNI " + dni + ".");
+                return;
+            }
         }
         Rol rol = pedirRol();
         if (rol == null) {
@@ -582,7 +611,7 @@ public class ProyectoFina {
         while (true) {
             try {
                 double valor = Double.parseDouble(leer(mensaje).replace(',', '.'));
-                if (valor >= minimo) {
+                if (valor >= minimo && !Double.isInfinite(valor)) {
                     return valor;
                 }
                 System.out.println("El valor debe ser mayor o igual a " + minimo + ".");
@@ -598,7 +627,11 @@ public class ProyectoFina {
     }
 
     static double leerOpcionalDecimal(String campo, double actual) {
-        return Double.parseDouble(leerOpcional(campo, String.valueOf(actual)).replace(',', '.'));
+        double valor = Double.parseDouble(leerOpcional(campo, String.valueOf(actual)).replace(',', '.'));
+        if (Double.isNaN(valor) || Double.isInfinite(valor)) { // parseDouble acepta "NaN" e "Infinity"
+            throw new NumberFormatException();
+        }
+        return valor;
     }
 
     static String elegir(String titulo, String... opciones) {

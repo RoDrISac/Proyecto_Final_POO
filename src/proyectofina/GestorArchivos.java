@@ -11,9 +11,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Manejo de archivos (S09): guarda y carga usuarios, clientes, inventario y ventas
@@ -27,6 +31,7 @@ public class GestorArchivos {
     public static final String CARPETA_COMPROBANTES = CARPETA_DATOS + File.separator + "comprobantes";
     public static final String CARPETA_REPORTES = CARPETA_DATOS + File.separator + "reportes";
     private static final String SEP = ";";
+    private static final Set<String> respaldados = new HashSet<>();
 
     public static void crearCarpetas() {
         new File(CARPETA_COMPROBANTES).mkdirs();
@@ -47,9 +52,11 @@ public class GestorArchivos {
         List<Usuario> usuarios = new ArrayList<>();
         for (String[] c : leer("usuarios.csv", 6)) {
             Rol rol = buscarRol(roles, c[4]);
-            if (rol != null) {
-                usuarios.add(new Usuario(c[0], c[1], c[2], c[3], rol, c[5]));
+            if (rol == null) {
+                omitir("usuarios.csv", "el usuario " + c[0] + " tiene un rol inexistente (" + c[4] + ")");
+                continue;
             }
+            usuarios.add(new Usuario(c[0], c[1], c[2], c[3], rol, c[5]));
         }
         return usuarios;
     }
@@ -87,9 +94,13 @@ public class GestorArchivos {
     public static List<Inventario> cargarInventario() throws IOException {
         List<Inventario> inventario = new ArrayList<>();
         for (String[] c : leer("inventario.csv", 10)) {
-            inventario.add(new Inventario(c[0], c[1], c[2], c[3], Double.parseDouble(c[4]), c[5],
-                    Integer.parseInt(c[6]), Integer.parseInt(c[7]), Double.parseDouble(c[8]),
-                    new Date(Long.parseLong(c[9]))));
+            try {
+                inventario.add(new Inventario(c[0], c[1], c[2], c[3], Double.parseDouble(c[4]), c[5],
+                        Integer.parseInt(c[6]), Integer.parseInt(c[7]), Double.parseDouble(c[8]),
+                        new Date(Long.parseLong(c[9]))));
+            } catch (IllegalArgumentException e) { // incluye NumberFormatException
+                omitir("inventario.csv", "el producto " + c[0] + " tiene datos no validos (" + e.getMessage() + ")");
+            }
         }
         return inventario;
     }
@@ -101,7 +112,7 @@ public class GestorArchivos {
             List<String> items = new ArrayList<>();
             for (int i = 0; i < v.getProductosVendidos().size(); i++) {
                 Producto p = v.getProductosVendidos().get(i);
-                items.add(p.getIdProducto() + ":" + p.getNombre().replace(":", "-").replace("|", "/") + ":"
+                items.add(p.getIdProducto() + ":" + limpiarItem(p.getNombre()) + ":"
                         + v.getCantidades().get(i) + ":" + v.getPreciosUnitarios().get(i));
             }
             lineas.add(unir(v.getIdVenta(), String.valueOf(v.getFecha().getTime()), v.getCliente().getIdCliente(),
@@ -117,17 +128,26 @@ public class GestorArchivos {
             Cliente cliente = buscarCliente(clientes, c[2]);
             Usuario vendedor = buscarUsuario(usuarios, c[3]);
             if (cliente == null || vendedor == null) {
-                System.out.println("Aviso: la venta " + c[0] + " tiene cliente o vendedor inexistente y no se cargo.");
+                omitir("ventas.csv", "la venta " + c[0] + " tiene cliente o vendedor inexistente");
                 continue;
             }
-            Venta venta = new Venta(c[0], new Date(Long.parseLong(c[1])), cliente, vendedor, c[4], c[5]);
-            for (String item : c[7].split("\\|")) {
-                String[] d = item.split(":");
-                Producto producto = buscarProducto(inventario, d[0]);
-                if (producto == null) { // producto eliminado: se conserva el dato historico de la venta
-                    producto = new Producto(d[0], d[1], "-", "-", Double.parseDouble(d[3]), "(eliminado)");
+            Venta venta;
+            try {
+                venta = new Venta(c[0], new Date(Long.parseLong(c[1])), cliente, vendedor, c[4], c[5]);
+                for (String item : c[7].split("\\|")) {
+                    String[] d = item.split(":");
+                    if (d.length < 4) {
+                        throw new IllegalArgumentException("producto incompleto: " + item);
+                    }
+                    Producto producto = buscarProducto(inventario, d[0]);
+                    if (producto == null) { // producto eliminado: se conserva el dato historico de la venta
+                        producto = new Producto(d[0], d[1], "-", "-", Double.parseDouble(d[3]), "(eliminado)");
+                    }
+                    venta.agregarProducto(producto, Integer.parseInt(d[2]), Double.parseDouble(d[3]));
                 }
-                venta.agregarProducto(producto, Integer.parseInt(d[2]), Double.parseDouble(d[3]));
+            } catch (IllegalArgumentException e) { // incluye NumberFormatException
+                omitir("ventas.csv", "la venta " + c[0] + " tiene datos no validos (" + e.getMessage() + ")");
+                continue;
             }
             venta.setEstado(c[6]);
             cliente.obtenerHistorialVentas().add(venta);
@@ -170,7 +190,7 @@ public class GestorArchivos {
                 }
                 String[] c = linea.split(SEP, -1);
                 if (c.length < columnas) {
-                    System.out.println("Aviso: linea " + numero + " de " + nombre + " incompleta, se omite.");
+                    omitir(nombre, "la linea " + numero + " esta incompleta");
                     continue;
                 }
                 filas.add(c);
@@ -181,6 +201,26 @@ public class GestorArchivos {
 
     private static File archivo(String nombre) {
         return new File(CARPETA_DATOS, nombre);
+    }
+
+    // Una linea danada se omite, pero antes se respalda el archivo original (.bak)
+    // porque al guardar se sobrescribe sin esa linea
+    private static void omitir(String nombre, String motivo) {
+        System.out.println("Aviso: en " + nombre + " " + motivo + "; se omite.");
+        if (respaldados.add(nombre)) {
+            File respaldo = new File(CARPETA_DATOS, nombre + ".bak");
+            try {
+                Files.copy(archivo(nombre).toPath(), respaldo.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Se guardo una copia del archivo original en: " + respaldo.getPath());
+            } catch (IOException e) {
+                System.out.println("No se pudo respaldar " + nombre + ": " + e.getMessage());
+            }
+        }
+    }
+
+    // En cada producto de una venta se usan ":" y "|" como separadores, y ";" separa las columnas
+    private static String limpiarItem(String texto) {
+        return texto.replace(":", "-").replace("|", "/").replace(SEP, ",");
     }
 
     // Une los campos con ";" quitando ese caracter de los textos para no romper las columnas
