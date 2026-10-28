@@ -30,7 +30,7 @@ public class Comprobante {
         this.tipo = venta.getTipoComprobante();
         // Numeracion unica: serie segun el tipo + numero de la venta
         this.idComprobante = (tipo.equals("Boleta") ? "B001-" : "R001-") + venta.getIdVenta().substring(1);
-        this.fechaEmision = new Date();
+        this.fechaEmision = venta.getFecha(); // al reimprimir se conserva la fecha de la venta
         this.montoTotal = venta.getMontoTotal();
         this.formato = "PDF";
     }

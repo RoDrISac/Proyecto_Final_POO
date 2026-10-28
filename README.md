@@ -21,7 +21,7 @@ Administrador `ADM-2026`, Vendedor `VEN-2026`, Supervisor de almacén `SUP-2026`
 ## Clases (diagrama de clases S09)
 | Clase | Descripción |
 |---|---|
-| `Persona` | Clase padre: nombre, apellido, DNI, `mostrarPersona()` |
+| `Persona` | Clase padre abstracta: nombre, apellido, DNI, `mostrarPersona()` |
 | `Usuario` | Hereda de Persona. `validarAcceso()`, `cambiarRol()` |
 | `Cliente` | Hereda de Persona. `registrarCliente()` (valida datos), `obtenerHistorialVentas()` |
 | `Rol` | Nombre, permisos y contraseña del rol. `tenerPermiso()` |
@@ -44,7 +44,7 @@ Atributos agregados al diagrama porque los piden la S08 y la S10: `Producto.mode
 - Ventas: varios productos, verificación de stock, método de pago (efectivo, Yape, Plin, transferencia, tarjeta),
   confirmación, descuento automático del stock y comprobante PDF con numeración única (B001-/R001-).
 - Reimpresión de comprobantes.
-- Reportes: inventario, stock bajo, ventas y productos más vendidos del mes, exportables a PDF o TXT.
+- Reportes: inventario, stock bajo, todas las ventas y productos más vendidos del mes, exportables a PDF o TXT.
 - Usuarios: listado, registro y cambio de rol.
 
 ## Archivos que genera (carpeta `datos/`)
