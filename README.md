@@ -31,10 +31,10 @@ Administrador `ADM-2026`, Vendedor `VEN-2026`, Supervisor de almacén `SUP-2026`
 | `DetalleVenta` | Línea del desglose de una venta: producto, cantidad, precio unitario. `calcularSubtotal()` |
 | `Comprobante` | Boleta o recibo con IGV. `emitirPDF()`, `enviarPorCorreo()` |
 | `Reporte` | Inventario, stock bajo, ventas y más vendidos del mes. `generar()`, `exportar()` (PDF o TXT) |
-| `GestorArchivos`, `ArchivoPDF` | Manejo de archivos (S09): CSV de datos y archivos PDF |
+| `GestorArchivos`, `ArchivoPDF` | Manejo de archivos : CSV de datos y archivos PDF |
 | `ProyectoFina` | Menú principal |
 
-Atributos agregados al diagrama porque los piden la S08 y la S10: `Producto.modelo` (código único por modelo),
+Atributos agregados al diagrama: `Producto.modelo` (código único por modelo),
 `Inventario.stockMinimo` y `tieneStockBajo()` (alertas de stock), `Cliente.historialVentas` y `Comprobante.venta`.
 
 ## Funciones
