@@ -71,11 +71,9 @@ public class Comprobante {
         l.add("----------------------------------------------------------");
         l.add(String.format("%-26s %5s %10s %12s", "Producto", "Cant.", "P. Unit.", "Importe"));
         l.add("----------------------------------------------------------");
-        List<Producto> productos = venta.getProductosVendidos();
-        for (int i = 0; i < productos.size(); i++) {
-            int cant = venta.getCantidades().get(i);
-            double precio = venta.getPreciosUnitarios().get(i);
-            l.add(String.format("%-26s %5d %10.2f %12.2f", recortar(productos.get(i).getNombre(), 26), cant, precio, cant * precio));
+        for (DetalleVenta d : venta.getDetalles()) {
+            l.add(String.format("%-26s %5d %10.2f %12.2f", recortar(d.getProducto().getNombre(), 26),
+                    d.getCantidad(), d.getPrecioUnitario(), d.calcularSubtotal()));
         }
         l.add("----------------------------------------------------------");
         l.add(String.format("%45s %12.2f", "Op. gravada  S/", opGravada));

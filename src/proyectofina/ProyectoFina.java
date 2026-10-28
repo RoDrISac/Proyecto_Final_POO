@@ -470,7 +470,8 @@ public class ProyectoFina {
         String formato = elegir("Exportar", "PDF", "TXT", "No exportar");
         if (!formato.equals("No exportar")) {
             try {
-                abrirArchivo(reporte.exportar(formato));
+                reporte.exportar(formato);
+                abrirArchivo(reporte.getArchivo());
             } catch (IOException e) {
                 System.out.println("No se pudo exportar el reporte: " + e.getMessage());
             }
