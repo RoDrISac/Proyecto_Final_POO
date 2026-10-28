@@ -47,6 +47,8 @@ Atributos agregados al diagrama: `Producto.modelo` (código único por modelo),
 - Reimpresión de comprobantes. El PDF del comprobante se abre automáticamente al emitirlo.
 - Reportes: inventario, stock bajo, todas las ventas y productos más vendidos del mes, exportables a PDF o TXT
   (el archivo exportado se abre automáticamente).
+- Reportes automáticos: al iniciar y cerrar sesión (roles con permiso de reportes) se actualizan los reportes
+  de ventas del día y del mes en `datos/reportes/`.
 - Usuarios: listado, registro y cambio de rol.
 
 ## Archivos que genera (carpeta `datos/`)

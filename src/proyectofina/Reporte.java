@@ -36,14 +36,22 @@ public class Reporte {
     public Reporte generar(String tipo) {
         this.tipo = tipo;
         this.fechaGeneracion = new Date();
-        this.idReporte = "REP-" + new SimpleDateFormat("yyyyMMdd-HHmmss").format(fechaGeneracion) + "-" + tipo;
+        // Los reportes diarios y mensuales tienen un archivo por periodo que se actualiza en cada generacion
+        String marca = switch (tipo) {
+            case "VENTAS_DIARIAS" -> new SimpleDateFormat("yyyyMMdd").format(fechaGeneracion);
+            case "VENTAS_MENSUALES" -> new SimpleDateFormat("yyyyMM").format(fechaGeneracion);
+            default -> new SimpleDateFormat("yyyyMMdd-HHmmss").format(fechaGeneracion);
+        };
+        this.idReporte = "REP-" + marca + "-" + tipo;
         StringBuilder sb = new StringBuilder();
         sb.append("COLORES Y CREACIONES - REPORTE DE ").append(tipo.replace('_', ' ')).append("\n");
         sb.append("Generado: ").append(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(fechaGeneracion)).append("\n\n");
         switch (tipo) {
             case "INVENTARIO" -> reporteInventario(sb, false);
             case "STOCK_BAJO" -> reporteInventario(sb, true);
-            case "VENTAS" -> reporteVentas(sb);
+            case "VENTAS" -> reporteVentas(sb, null);
+            case "VENTAS_DIARIAS" -> reporteVentas(sb, "dd/MM/yyyy");
+            case "VENTAS_MENSUALES" -> reporteVentas(sb, "MM/yyyy");
             case "MAS_VENDIDOS" -> reporteMasVendidos(sb);
             default -> throw new IllegalArgumentException("Tipo de reporte no valido: " + tipo);
         }
@@ -79,13 +87,23 @@ public class Reporte {
         sb.append("\nProductos listados: ").append(n).append("   (* = stock bajo)\n");
     }
 
-    private void reporteVentas(StringBuilder sb) {
+    // periodo: formato de fecha del dia o del mes a reportar; null para todas las ventas
+    private void reporteVentas(StringBuilder sb, String periodo) {
+        String actual = periodo == null ? null : new SimpleDateFormat(periodo).format(fechaGeneracion);
+        if (actual != null) {
+            sb.append("Periodo: ").append(actual).append("\n\n");
+        }
         double total = 0;
+        int n = 0;
         for (Venta v : ventas) {
+            if (actual != null && !new SimpleDateFormat(periodo).format(v.getFecha()).equals(actual)) {
+                continue;
+            }
             sb.append(v.getResumenVenta()).append("\n\n");
             total += v.getMontoTotal();
+            n++;
         }
-        sb.append(String.format("Ventas: %d | Monto total vendido: S/ %.2f%n", ventas.size(), total));
+        sb.append(String.format("Ventas: %d | Monto total vendido: S/ %.2f%n", n, total));
     }
 
     private void reporteMasVendidos(StringBuilder sb) {

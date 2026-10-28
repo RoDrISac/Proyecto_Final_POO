@@ -35,6 +35,7 @@ public class ProyectoFina {
             System.out.println("Demasiados intentos fallidos. Saliendo del sistema...");
             return;
         }
+        generarReportesAutomaticos();
         int opcion;
         do {
             mostrarMenu();
@@ -59,6 +60,7 @@ public class ProyectoFina {
                     case 16 -> { if (tienePermiso("USUARIOS")) cambiarRolUsuario(); }
                     case 0 -> {
                         guardarDatos();
+                        generarReportesAutomaticos();
                         System.out.println("Datos guardados. Hasta pronto, " + usuarioActual.getNombre() + ".");
                     }
                     default -> System.out.println("Opcion invalida.");
@@ -463,7 +465,8 @@ public class ProyectoFina {
 
     // ---------------- Reportes ----------------
     static void generarReporte() {
-        String tipo = elegir("Tipo de reporte", "INVENTARIO", "STOCK_BAJO", "VENTAS", "MAS_VENDIDOS");
+        String tipo = elegir("Tipo de reporte", "INVENTARIO", "STOCK_BAJO", "VENTAS", "MAS_VENDIDOS",
+                "VENTAS_DIARIAS", "VENTAS_MENSUALES");
         Reporte reporte = new Reporte(ventas, inventario).generar(tipo);
         System.out.println();
         System.out.println(reporte.getContenido());
@@ -474,6 +477,20 @@ public class ProyectoFina {
                 abrirArchivo(reporte.getArchivo());
             } catch (IOException e) {
                 System.out.println("No se pudo exportar el reporte: " + e.getMessage());
+            }
+        }
+    }
+
+    // Al iniciar y al cerrar sesion se actualizan los reportes de ventas del dia y del mes (rol con permiso REPORTES)
+    static void generarReportesAutomaticos() {
+        if (!usuarioActual.getRol().tenerPermiso("REPORTES")) {
+            return;
+        }
+        for (String tipo : new String[]{"VENTAS_DIARIAS", "VENTAS_MENSUALES"}) {
+            try {
+                new Reporte(ventas, inventario).generar(tipo).exportar("TXT");
+            } catch (IOException e) {
+                System.out.println("No se pudo generar el reporte automatico " + tipo + ": " + e.getMessage());
             }
         }
     }
