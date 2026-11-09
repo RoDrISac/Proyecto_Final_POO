@@ -1,0 +1,59 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R ] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Length 1195 >>
+stream
+BT
+/F1 10 Tf
+13 TL
+45 800 Td
+(==========================================================) Tj T*
+(                  COLORES Y CREACIONES) Tj T*
+(            Productos artesanales - Cajamarca) Tj T*
+(==========================================================) Tj T*
+(BOLETA DE VENTA  N° B001-0001) Tj T*
+(Fecha de emision: 08/11/2026 21:00) Tj T*
+(Venta: V0001   Vendedor: Admin Principal) Tj T*
+() Tj T*
+(Cliente:   Cliente Prueba) Tj T*
+(DNI:       12345678) Tj T*
+(Direccion: Dirección de prueba) Tj T*
+(----------------------------------------------------------) Tj T*
+(Producto                   Cant.   P. Unit.      Importe) Tj T*
+(----------------------------------------------------------) Tj T*
+(Producto histórico            12      12,50       150,00) Tj T*
+(----------------------------------------------------------) Tj T*
+(                              Op. gravada  S/       127,12) Tj T*
+(                                IGV \(18%\)  S/        22,88) Tj T*
+(                                    TOTAL  S/       150,00) Tj T*
+() Tj T*
+(Metodo de pago: Yape) Tj T*
+(==========================================================) Tj T*
+(               Gracias por su preferencia) Tj T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000116 00000 n 
+0000000211 00000 n 
+0000001458 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1584
+%%EOF

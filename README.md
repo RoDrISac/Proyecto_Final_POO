@@ -1,13 +1,15 @@
-# Sistema de Ventas e Inventario - Colores y Creaciones
+# Colores y Creaciones — T3 mejorado
 
-Proyecto del curso Técnicas de Programación Orientada a Objetos (UPN, 2026-2).
-Aplicación de consola en Java (NetBeans) implementada según los informes del grupo:
-S07 (alcance), S08 (historias de usuario y requerimientos), S09 (diagrama de clases y manejo de archivos)
-y S10 (requerimientos y criterios de aceptación).
+Versión gráfica de Java Swing / NetBeans. Conserva el historial del proyecto original y añade la entrega T3.
 
-## Cómo ejecutar
-1. NetBeans → **File → Open Project** → seleccionar esta carpeta.
-2. **Run** (F6) e iniciar sesión en la ventana Output.
+## Abrir y ejecutar
+
+- **Más directo:** doble clic en `ejecutar.cmd` (primero extraer todo el ZIP). Si no hay JAR, se compila automáticamente. Se necesita JDK 17 o superior. En el equipo de preparación se comprobó con JDK 24.
+- **NetBeans:** Archivo → Abrir proyecto → esta carpeta → Ejecutar proyecto (F6). El proyecto se llama **ColoresCreacionesT3**. Si pide plataforma, seleccionar el JDK instalado (17 o superior).
+- El JAR ejecutable está en `dist/ColoresCreacionesT3.jar`. Si lo ejecutas manualmente, usa como directorio de trabajo la raíz del proyecto: `java -jar dist/ColoresCreacionesT3.jar`.
+- `compilar.cmd` reconstruye el JAR sin librerías externas; `verificar.cmd` compila y ejecuta las pruebas.
+
+## Acceso de demostración
 
 | Código | Contraseña | Rol |
 |---|---|---|
@@ -15,44 +17,29 @@ y S10 (requerimientos y criterios de aceptación).
 | U002 | 1234 | Vendedor |
 | U003 | 1234 | Supervisor de almacén |
 
-Para asignar un rol a un usuario nuevo se pide la contraseña del rol:
-Administrador `ADM-2026`, Vendedor `VEN-2026`, Supervisor de almacén `SUP-2026`.
+Son credenciales de demostración heredadas del proyecto original. Tras 3 intentos incorrectos hay que cerrar y volver a abrir la aplicación.
 
-## Clases (diagrama de clases S09)
-| Clase | Descripción |
-|---|---|
-| `Persona` | Clase padre abstracta: nombre, apellido, DNI, `mostrarPersona()` |
-| `Usuario` | Hereda de Persona. `validarAcceso()`, `cambiarRol()` |
-| `Cliente` | Hereda de Persona. `registrarCliente()` (valida datos), `obtenerHistorialVentas()` |
-| `Rol` | Nombre, permisos y contraseña del rol. `tenerPermiso()` |
-| `Producto` | Código, nombre, modelo, categoría, precio, descripción. `mostrarInfo()` |
-| `Inventario` | Hereda de Producto. Stock, stock mínimo, costo, fecha de ingreso. `actualizarStock()`, `calcularGananciaUnitaria()`, `estaDisponible()` |
-| `Venta` | Cliente, vendedor, productos/cantidades/precios, método de pago, tipo de comprobante. `agregarProducto()`, `calcularMontoTotal()`, `getResumenVenta()` |
-| `DetalleVenta` | Línea del desglose de una venta: producto, cantidad, precio unitario. `calcularSubtotal()` |
-| `Comprobante` | Boleta o recibo con IGV. `emitirPDF()`, `enviarPorCorreo()` |
-| `Reporte` | Inventario, stock bajo, ventas y más vendidos del mes. `generar()`, `exportar()` (PDF o TXT) |
-| `GestorArchivos`, `ArchivoPDF` | Manejo de archivos : CSV de datos y archivos PDF |
-| `ProyectoFina` | Menú principal |
+## Qué se completó
 
-Atributos agregados al diagrama: `Producto.modelo` (código único por modelo),
-`Inventario.stockMinimo` y `tieneStockBajo()` (alertas de stock), `Cliente.historialVentas` y `Comprobante.venta`.
+- Ocho vistas: acceso, resumen, inventario, clientes, nueva venta, historial, reportes y usuarios.
+- Formularios con validación, confirmaciones, mensajes y navegación según rol.
+- Servicios separados para inventario, clientes, ventas, usuarios y reportes; interfaz de repositorio y persistencia atómica.
+- Composición Venta → DetalleVenta, instantáneas históricas, herencia de Persona y polimorfismo.
+- Unidad de medida, movimientos con usuario/fecha/saldo, reporte por período, precisión monetaria y protección contra ventas parciales.
+- Matriz trazable a S08, pruebas repetibles, pantallas y comprobantes reales de prueba.
 
-## Funciones
-- Inicio de sesión con código único y contraseña (3 intentos) y permisos por rol.
-- Productos: registrar, editar, eliminar, ingreso de stock (producción o compra), ver inventario con alertas de stock bajo.
-- Búsqueda por código: funciona con lector de código de barras (el lector escribe el código y presiona Enter).
-- Clientes: registro con validación (DNI de 8 dígitos, correo), listado e historial de compras.
-- Ventas: varios productos, verificación de stock, método de pago (efectivo, Yape, Plin, transferencia, tarjeta),
-  confirmación, descuento automático del stock y comprobante PDF con numeración única (B001-/R001-).
-- Reimpresión de comprobantes. El PDF del comprobante se abre automáticamente al emitirlo.
-- Reportes: inventario, stock bajo, todas las ventas y productos más vendidos del mes, exportables a PDF o TXT
-  (el archivo exportado se abre automáticamente).
-- Reportes automáticos: al iniciar y cerrar sesión (roles con permiso de reportes) se actualizan los reportes
-  de ventas del día y del mes en `datos/reportes/`.
-- Usuarios: listado, registro y cambio de rol.
+## Datos
 
-## Archivos que genera (carpeta `datos/`)
-`usuarios.csv`, `clientes.csv`, `inventario.csv`, `ventas.csv`, `comprobantes/*.pdf` y `reportes/*`.
-Se cargan al iniciar el programa, así que la información se conserva al cerrarlo.
+En una descarga de GitHub, `datos/` no se distribuye: la primera ejecución crea los tres usuarios de demostración y un catálogo vacío. Si colocas tus CSV en `datos/` antes del primer inicio, se importan y se crea `datos/estado-t3.dat`. A partir de ahí, este archivo es la fuente de datos; los CSV se conservan como entrada histórica y no se actualizan. Los PDF y reportes se guardan en `datos/comprobantes/` y `datos/reportes/`.
 
-Autores: Alvaro Agustín Silva Barrantes, Rodrigo Aldair Sánchez Carrasco.
+Para respaldar, cerrar la aplicación y copiar **toda la carpeta `datos`**. Solo se admite una instancia por carpeta, protegida por un bloqueo. Los datos de trabajo están excluidos de Git. `test/fixtures/` contiene únicamente datos ficticios para verificar la importación.
+
+## Documentación de entrega
+
+- `docs/INFORME_T3.html`: revisión visual con enlaces a todas las evidencias.
+- `docs/MATRIZ_ACEPTACION.md`: criterios por número de S08 y alcance explícito.
+- `docs/ARQUITECTURA.md`: responsabilidades y relaciones orientadas a objetos.
+- `docs/GUION_DEMO.md`: demostración paso a paso.
+- `docs/evidencias/`: logs, imágenes, PDF y movimiento de prueba.
+
+Los dos informes de campo y responsabilidad social se adjuntan por separado. La calificación la determina el docente; esta entrega documenta lo implementado y lo efectivamente verificado.

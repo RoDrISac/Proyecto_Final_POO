@@ -1,0 +1,5 @@
+PASS | Construcción del proyecto NetBeans con Apache Ant incluido en NetBeans 25.
+Comando: java -jar ant-launcher.jar -Dbuild.classes.dir=build/netbeans-check -Ddist.dir=build/netbeans-dist jar
+Resultado: BUILD SUCCESSFUL. 30 archivos fuente compilados. JAR generado.
+JDK de ejecución: 24. Compilación del entregable mediante compilar.cmd: --release 17.
+Ant emitió advertencia por source/target 17 en JDK 24; el JAR distribuido se construyó con --release 17.

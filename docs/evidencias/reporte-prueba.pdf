@@ -1,0 +1,50 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R ] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Length 714 >>
+stream
+BT
+/F1 10 Tf
+13 TL
+45 800 Td
+(COLORES Y CREACIONES - REPORTE DE VENTAS) Tj T*
+(Generado: 08/11/2026 21:00) Tj T*
+() Tj T*
+(Venta V0001 | 08/11/2026 21:00:45 | Cliente: Cliente Prueba | Vendedor: Admin Prin) Tj T*
+(cipal) Tj T*
+(   Producto histórico     x12  S/    12,50 = S/    150,00) Tj T*
+(   Productos: 12 | Total: S/ 150,00 | Pago: Yape | Boleta | Estado: Concluido) Tj T*
+() Tj T*
+(Venta V0002 | 08/11/2026 21:00:45 | Cliente: Cliente Prueba | Vendedor: Admin Prin) Tj T*
+(cipal) Tj T*
+(   Nombre nuevo           x1   S/    20,00 = S/     20,00) Tj T*
+(   Productos: 1 | Total: S/ 20,00 | Pago: Efectivo | Recibo | Estado: Concluido) Tj T*
+() Tj T*
+(Ventas: 2 | Monto total vendido: S/ 170,00) Tj T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000116 00000 n 
+0000000211 00000 n 
+0000000976 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1102
+%%EOF

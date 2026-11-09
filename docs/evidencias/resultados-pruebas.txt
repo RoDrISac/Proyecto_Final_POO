@@ -1,0 +1,63 @@
+EJECUCIÓN REAL: 2026-11-08T21:00:45.508786500-05:00[America/Lima]
+Java: 24.0.1
+Datos aislados: C:\Users\Rodrigo\AppData\Local\Packages\openai.codex_2p2nqsd0c76g0\AC\#!sandbox.{1472ec85-c04f-475a-b233-3530c1ef6ae6}\Temp\colores-t3-test-17398263590735953866
+
+PASS | PA01a - Sesión requerida
+PASS | PA01b - Credenciales inválidas
+PASS | PA01c - Acceso administrador
+PASS | PA02 - RF01/RF06 registro con unidad
+PASS | PA03a - Código duplicado
+PASS | PA03b - Precio negativo
+PASS | PA03c - NaN rechazado
+PASS | PA03d - Stock negativo
+PASS | PA03e - Máximo dos decimales
+PASS | PA04 - RF34/RF35 ingreso por código y saldo
+PASS | PA05a - Cliente DNI inválido
+PASS | PA05b - Cliente duplicado
+PASS | PA05c - Correo inválido
+PASS | PA06a - RF40 venta sin stock
+PASS | PA06b - Rechazo sin efectos parciales
+PASS | PA06c - Carrito vacío
+PASS | PA07 - RF09/RF38/RF42/RF43/RF44 total, pago y stock
+PASS | PA08 - RF15 alerta stock bajo
+PASS | PA09 - RF25 PDF generado
+PASS | PA10 - RF39 desglose IGV
+PASS | PA11 - RF07 edición sin alterar historia
+PASS | PA12 - RF27 numeración única
+PASS | PA13 - RF08 baja conserva ventas
+PASS | PA14 - RF27 persistencia al reiniciar
+PASS | PA15 - RF29 reimpresión idéntica
+PASS | PA16-INVENTARIO - RF10/RF18/RF19/RF20 reporte
+PASS | PA16-STOCK_BAJO - RF10/RF18/RF19/RF20 reporte
+PASS | PA16-VENTAS - RF10/RF18/RF19/RF20 reporte
+PASS | PA16-MAS_VENDIDOS - RF10/RF18/RF19/RF20 reporte
+PASS | PA16-VENTAS_DIARIAS - RF10/RF18/RF19/RF20 reporte
+PASS | PA16-VENTAS_MENSUALES - RF10/RF18/RF19/RF20 reporte
+PASS | PA16-MOVIMIENTOS - RF10/RF18/RF19/RF20 reporte
+PASS | PA17 - RF19 movimientos trazables
+PASS | PA18 - RF19 filtro excluye otras fechas
+PASS | PA19 - Fechas invertidas
+PASS | PA20a - RF30 vendedor no modifica inventario
+PASS | PA20b - RF30 vendedor no gestiona usuarios
+PASS | PA20c - RF30 vendedor no genera reportes
+PASS | PA20d - RF30 supervisor no vende
+PASS | PA21 - Gestión de usuarios y roles
+PASS | PA22 - Administrador no degrada su propio rol
+PASS | PA23 - Fallo de guardado no altera memoria
+PASS | PA24-0 - Intento inválido
+PASS | PA24-1 - Intento inválido
+PASS | PA24-2 - Intento inválido
+PASS | PA24d - Bloqueo tras tres fallos
+PASS | PA25 - Encapsulamiento mediante copia
+PASS | PA26 - RF39 cálculo exacto IGV incluido
+PASS | PA27 - RF38 precisión monetaria
+PASS | PA28a - RF40 carrito parcialmente inválido
+PASS | PA28b - Venta rechazada sin descuento parcial
+PASS | PA29 - RF27 fallo de disco revierte venta y stock
+PASS | PA30 - RF20 ranking solo del mes actual
+PASS | PA31 - RF18 contenido y saldo
+PASS | PA32 - Reportes automáticos del día y mes
+PASS | PA33 - Polimorfismo Persona
+
+TOTAL: 56 verificaciones aprobadas; 0 fallos.
+No incluye prueba de impresora física ni lector físico.

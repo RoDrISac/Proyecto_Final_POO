@@ -1,0 +1,21 @@
+Ejecución: 2026-11-08T21:00:51.177845800-05:00[America/Lima]
+Imágenes renderizadas por printAll de componentes Swing reales (no fotografías del escritorio).
+Datos ficticios aislados.
+PASS | Render Swing: 01-acceso
+PASS | Evento Ingresar inicia sesión
+PASS | Render Swing: 02-resumen
+PASS | Formulario Nuevo y evento Guardar persisten producto
+PASS | RF33 código y Enter filtran el inventario
+PASS | Render Swing: 03-inventario
+PASS | Render Swing: 04-clientes
+PASS | Evento Agregar añade producto al carrito
+PASS | Render Swing: 05-venta
+PASS | Cancelar confirmación no registra venta ni descuenta stock
+PASS | Confirmar venta desde GUI registra venta y genera PDF
+PASS | Render Swing: 12-venta-confirmada
+PASS | Render Swing: 06-historial
+PASS | Render Swing: 07-reportes
+PASS | Render Swing: 08-usuarios
+PASS | Render Swing: 09-venta-tamano-minimo
+PASS | Vendedor no muestra Usuarios ni Reportes
+PASS | Render Swing: 10-rol-vendedor

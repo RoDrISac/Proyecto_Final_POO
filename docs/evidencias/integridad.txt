@@ -1,0 +1,5 @@
+PASS | ZIP original conserva SHA-256 registrado en FUENTES.json.
+PASS | Los 13 archivos Java del proyecto original son idénticos al ZIP recibido.
+PASS | PDF de comprobante y reporte leídos con pypdf.
+PASS | Enlaces locales del informe verificados.
+PASS | JAR ejecutable para Java 17, sin clases de prueba.
