@@ -7,7 +7,7 @@ Versión gráfica de Java Swing / NetBeans. Conserva el historial del proyecto o
 - **Más directo:** doble clic en `ejecutar.cmd` (primero extraer todo el ZIP). Si no hay JAR, se compila automáticamente. Se necesita JDK 17 o superior. En el equipo de preparación se comprobó con JDK 24.
 - **NetBeans:** Archivo → Abrir proyecto → esta carpeta → Ejecutar proyecto (F6). El proyecto se llama **ColoresCreacionesT3**. Si pide plataforma, seleccionar el JDK instalado (17 o superior).
 - El JAR ejecutable está en `dist/ColoresCreacionesT3.jar`. Si lo ejecutas manualmente, usa como directorio de trabajo la raíz del proyecto: `java -jar dist/ColoresCreacionesT3.jar`.
-- `compilar.cmd` reconstruye el JAR sin librerías externas; `verificar.cmd` compila y ejecuta las pruebas.
+- `compilar.cmd` reconstruye el JAR sin librerías externas.
 
 ## Acceso de demostración
 
