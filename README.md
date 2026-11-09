@@ -36,10 +36,7 @@ Para respaldar, cerrar la aplicación y copiar **toda la carpeta `datos`**. Solo
 
 ## Documentación de entrega
 
-- `docs/INFORME_T3.html`: revisión visual con enlaces a todas las evidencias.
 - `docs/MATRIZ_ACEPTACION.md`: criterios por número de S08 y alcance explícito.
-- `docs/ARQUITECTURA.md`: responsabilidades y relaciones orientadas a objetos.
-- `docs/GUION_DEMO.md`: demostración paso a paso.
 - `docs/evidencias/`: logs, imágenes, PDF y movimiento de prueba.
 
 Los dos informes de campo y responsabilidad social se adjuntan por separado. La calificación la determina el docente; esta entrega documenta lo implementado y lo efectivamente verificado.

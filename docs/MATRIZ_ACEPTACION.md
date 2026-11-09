@@ -29,13 +29,6 @@ Los criterios siguientes se formalizaron para esta entrega técnica; no se atrib
 | RF42 | Método de pago | Permite Efectivo, Yape, Plin, Transferencia y Tarjeta. El valor elegido se conserva con la venta y aparece en el comprobante. | PA07, PA27 | 05-venta.png; comprobante-prueba.pdf |
 | RF43 / RF44 | Confirmación y actualización | Cancelar conserva el carrito sin persistir una venta; confirmar registra detalle, descuenta stock y vacía el carrito. La GUI muestra el ID y el PDF creado. | PA07, PA28b, PA29; evento GUI Confirmar venta | 12-venta-confirmada.png |
 
-## Cómo verificar
-
-1. Ejecutar `verificar.cmd` desde la carpeta raíz (JDK 17 o superior). La suite no modifica los CSV ni los datos de trabajo: usa carpetas temporales.
-2. Abrir `docs/evidencias/resultados-pruebas.txt`, `resultados-visuales.txt` e `importacion.txt`.
-3. Consultar el código de pruebas en `test/proyectofina/` y repetir la demostración de `GUION_DEMO.md`.
-4. Abrir `INFORME_T3.html` para revisar las pantallas y documentos de ejemplo.
-
 ## Límites explícitos
 
 - RF02, RF04, RF05, RF11–14 y RF28: fuera de la selección T3; materias primas, costeo de producción completo, calidad, pedidos y envío automático de correo no se implementan.
