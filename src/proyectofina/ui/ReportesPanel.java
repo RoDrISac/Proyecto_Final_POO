@@ -12,10 +12,10 @@ public final class ReportesPanel extends JPanel {
     public ReportesPanel(Sistema s) {
         super(new BorderLayout());
         servicio=new ReportesServicio(s);
-        var p=Gui.pagina("Reportes","Inventario, ventas y movimientos. Exporta los resultados a PDF o texto.");
+        var p=Gui.pagina("Reportes","Inventario, ventas y movimientos. Exporta y abre los resultados en PDF.");
         var c=new JPanel(new BorderLayout(8,12));
         var barras=new JPanel(new GridLayout(0,1,0,4));
-        barras.add(Gui.fila(new JLabel("Reporte"),tipo,Gui.boton("Consultar",this::generar),Gui.boton("Exportar PDF",()->exportar("PDF")),Gui.boton("Exportar TXT",()->exportar("TXT"))));
+        barras.add(Gui.fila(new JLabel("Reporte"),tipo,Gui.boton("Consultar",this::generar),Gui.boton("Exportar PDF",this::exportar)));
         barras.add(Gui.fila(new JLabel("Movimientos desde (AAAA-MM-DD)"),desde,new JLabel("hasta"),hasta));
         c.add(barras,BorderLayout.NORTH);
         c.add(new JScrollPane(contenido));
@@ -34,9 +34,10 @@ public final class ReportesPanel extends JPanel {
             throw new IllegalArgumentException("Usa fechas válidas con formato AAAA-MM-DD.");
         }
     }
-    private void exportar(String formato) throws Exception {
+    private void exportar() throws Exception {
         generar();
-        var f=servicio.exportar((String)tipo.getSelectedItem(),contenido.getText(),formato);
+        var f=servicio.exportar((String)tipo.getSelectedItem(),contenido.getText(),"PDF");
         estado.setText("Guardado: "+f.getAbsolutePath());
+        Gui.abrirPdfGuardado(this,f);
     }
 }

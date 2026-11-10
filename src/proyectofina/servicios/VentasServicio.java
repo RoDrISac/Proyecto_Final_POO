@@ -4,6 +4,7 @@ import java.util.*;
 import proyectofina.*;
 import proyectofina.persistencia.Estado;
 public final class VentasServicio {
+    public static final String COMPROBANTE="Boleta";
     private final Sistema s;
     public static final String[] PAGOS= {
         "Efectivo","Yape","Plin","Transferencia","Tarjeta"
@@ -14,7 +15,7 @@ public final class VentasServicio {
     }
     public Venta confirmar(String clienteId,Map<String,Integer> carrito,String pago,String tipo) throws IOException {
         if(carrito.isEmpty()) throw new IllegalArgumentException("Agrega al menos un producto.");
-        if(!List.of(PAGOS).contains(pago)||!List.of("Boleta","Recibo").contains(tipo)) throw new IllegalArgumentException("Pago o comprobante inválido.");
+        if(!List.of(PAGOS).contains(pago)||!COMPROBANTE.equals(tipo)) throw new IllegalArgumentException("Pago o comprobante inválido.");
         String[] nuevoId= {
             null
         }

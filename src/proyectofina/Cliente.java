@@ -12,7 +12,8 @@ public class Cliente extends Persona {
     private String telefono;
     private String correoElectronico;
     private List<Venta> historialVentas = new ArrayList<>();
-    public Cliente(String idCliente, String nombre, String apellido, String dni,                    String direccion, String telefono, String correoElectronico) {
+    public Cliente(String idCliente, String nombre, String apellido, String dni,
+            String direccion, String telefono, String correoElectronico) {
         super(nombre, apellido, dni);
         this.idCliente = idCliente;
         this.direccion = direccion;

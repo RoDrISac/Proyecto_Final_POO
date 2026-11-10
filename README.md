@@ -28,6 +28,10 @@ Son credenciales de demostración heredadas del proyecto original. Tras 3 intent
 - Unidad de medida, movimientos con usuario/fecha/saldo, reporte por período, precisión monetaria y protección contra ventas parciales.
 - Matriz trazable a S08, pruebas repetibles, pantallas y comprobantes reales de prueba.
 
+- Ventas nuevas con Boleta; los comprobantes históricos conservan su tipo.
+- PDF con encabezado, stock bajo destacado y apertura automática al generar comprobantes o exportar reportes.
+- Exportación desde la interfaz únicamente a PDF.
+
 ## Datos
 
 En una descarga de GitHub, `datos/` no se distribuye: la primera ejecución crea los tres usuarios de demostración y un catálogo vacío. Si colocas tus CSV en `datos/` antes del primer inicio, se importan y se crea `datos/estado-t3.dat`. A partir de ahí, este archivo es la fuente de datos; los CSV se conservan como entrada histórica y no se actualizan. Los PDF y reportes se guardan en `datos/comprobantes/` y `datos/reportes/`.

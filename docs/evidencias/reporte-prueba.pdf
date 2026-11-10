@@ -9,31 +9,40 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
 endobj
 4 0 obj
-<< /Length 714 >>
+<< /Length 1930 >>
 stream
-BT
-/F1 10 Tf
-13 TL
-45 800 Td
-(COLORES Y CREACIONES - REPORTE DE VENTAS) Tj T*
-(Generado: 08/11/2026 21:00) Tj T*
-() Tj T*
-(Venta V0001 | 08/11/2026 21:00:45 | Cliente: Cliente Prueba | Vendedor: Admin Prin) Tj T*
-(cipal) Tj T*
-(   Producto histórico     x12  S/    12,50 = S/    150,00) Tj T*
-(   Productos: 12 | Total: S/ 150,00 | Pago: Yape | Boleta | Estado: Concluido) Tj T*
-() Tj T*
-(Venta V0002 | 08/11/2026 21:00:45 | Cliente: Cliente Prueba | Vendedor: Admin Prin) Tj T*
-(cipal) Tj T*
-(   Nombre nuevo           x1   S/    20,00 = S/     20,00) Tj T*
-(   Productos: 1 | Total: S/ 20,00 | Pago: Efectivo | Recibo | Estado: Concluido) Tj T*
-() Tj T*
-(Ventas: 2 | Monto total vendido: S/ 170,00) Tj T*
-ET
+0.106 0.180 0.220 rg 0 724 595 118 re f
+BT /F3 21 Tf 1 1 1 rg 40 792 Td (COLORES Y CREACIONES) Tj ET
+BT /F2 10 Tf 0.55 0.84 0.75 rg 40 765 Td (REPORTES Y COMPROBANTES) Tj ET
+0.55 0.84 0.75 rg 40 742 44 3 re f
+0.955 0.965 0.968 rg 36 693 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 699 Td (COLORES Y CREACIONES - REPORTE DE VENTAS) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 681 Td (Generado: 09/11/2026 19:12) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 663 Td () Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 645 Td (Venta V0001 | 09/11/2026 19:12:28 | Cliente: Cliente Prueba | Vendedor: Admin Prin) Tj ET
+0.955 0.965 0.968 rg 36 621 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 627 Td (cipal) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 609 Td (   Producto histórico     x12  S/    12,50 = S/    150,00) Tj ET
+0.955 0.965 0.968 rg 36 585 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 591 Td (   Productos: 12 | Total: S/ 150,00 | Pago: Yape | Boleta | Estado: Concluido) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 573 Td () Tj ET
+0.955 0.965 0.968 rg 36 549 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 555 Td (Venta V0002 | 09/11/2026 19:12:28 | Cliente: Cliente Prueba | Vendedor: Admin Prin) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 537 Td (cipal) Tj ET
+0.955 0.965 0.968 rg 36 513 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 519 Td (   Nombre nuevo           x1   S/    20,00 = S/     20,00) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 501 Td (   Productos: 1 | Total: S/ 20,00 | Pago: Efectivo | Boleta | Estado: Concluido) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 483 Td () Tj ET
+0.87 0.94 0.92 rg 36 459 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 465 Td (Ventas: 2 | Monto total vendido: S/ 170,00) Tj ET
+0.80 0.85 0.85 rg 40 52 515 1 re f
+BT /F2 9 Tf 0.36 0.44 0.47 rg 40 35 Td (Colores y Creaciones | Gestión comercial) Tj ET
+BT /F2 9 Tf 0.36 0.44 0.47 rg 475 35 Td (Página 1 de 1) Tj ET
+
 endstream
 endobj
 5 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >> /F3 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >> >> >> /Contents 4 0 R >>
 endobj
 xref
 0 6
@@ -42,9 +51,9 @@ xref
 0000000058 00000 n 
 0000000116 00000 n 
 0000000211 00000 n 
-0000000976 00000 n 
+0000002193 00000 n 
 trailer
 << /Size 6 /Root 1 0 R >>
 startxref
-1102
+2496
 %%EOF

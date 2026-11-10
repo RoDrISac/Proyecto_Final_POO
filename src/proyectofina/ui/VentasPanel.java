@@ -8,9 +8,9 @@ public final class VentasPanel extends JPanel {
     private final Sistema s;
     private final LinkedHashMap<String,Integer> carrito=new LinkedHashMap<>();
     private final JTable tabla=Gui.tabla("Código","Producto","Modelo","Cantidad","Precio","Subtotal");
-    private final JComboBox<String> clientes=new JComboBox<>(),producto=new JComboBox<>(),pago=new JComboBox<>(VentasServicio.PAGOS),tipo=new JComboBox<>(new String[] {
-        "Boleta","Recibo"
-    }
+    private final JComboBox<String> clientes=new JComboBox<>(),producto=new JComboBox<>(),pago=new JComboBox<>(VentasServicio.PAGOS);
+    private final JLabel tipo=new JLabel(
+        "Boleta"
     );
     private final JTextField codigo=new JTextField(12);
     private final JSpinner cantidad=new JSpinner(new SpinnerNumberModel(1,1,1000000,1));
@@ -24,7 +24,16 @@ public final class VentasPanel extends JPanel {
         clientes.setPreferredSize(new Dimension(300,34));
         producto.setPreferredSize(new Dimension(260,34));
         pago.setPreferredSize(new Dimension(155,34));
-        tipo.setPreferredSize(new Dimension(120,34));
+        tipo.setText("BOLETA");
+        tipo.setHorizontalAlignment(SwingConstants.CENTER);
+        tipo.setFont(new Font("Segoe UI",Font.BOLD,13));
+        tipo.setForeground(Gui.ACENTO);
+        tipo.setOpaque(true);
+        tipo.setBackground(new Color(225,241,236));
+        tipo.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(167,205,192),1,true),
+            BorderFactory.createEmptyBorder(8,18,8,18)));
+        tipo.setPreferredSize(new Dimension(130,36));
         superior.add(Gui.fila(new JLabel("Cliente"),clientes));
         superior.add(Gui.fila(new JLabel("Pago"),pago,new JLabel("Comprobante"),tipo));
         superior.add(Gui.fila(new JLabel("Producto"),producto,Gui.boton("Elegir",()-> {
@@ -103,13 +112,14 @@ public final class VentasPanel extends JPanel {
         if(carrito.isEmpty())throw new IllegalArgumentException("Agrega al menos un producto.");
         String cliente=id(clientes);
         if(!Gui.confirmar(this,"¿Registrar la venta? "+total.getText()+"\nSe descontará el stock de los productos."))return;
-        Venta v=s.ventas.confirmar(cliente,carrito,(String)pago.getSelectedItem(),(String)tipo.getSelectedItem());
+        Venta v=s.ventas.confirmar(cliente,carrito,(String)pago.getSelectedItem(),VentasServicio.COMPROBANTE);
         carrito.clear();
         actualizarCarrito();
         estado.setText("Venta "+v.getIdVenta()+" registrada · "+Gui.soles(v.getMontoTotal()));
         try {
             var pdf=s.ventas.comprobante(v);
             estado.setText("Venta "+v.getIdVenta()+" registrada · PDF: "+pdf.getName());
+            Gui.abrirPdfGuardado(this,pdf);
         }
         catch(java.io.IOException e) {
             JOptionPane.showMessageDialog(this,"La venta SÍ se guardó. No repitas la venta.\nEl PDF no pudo generarse; reintenta desde Historial.\n"+e.getMessage());

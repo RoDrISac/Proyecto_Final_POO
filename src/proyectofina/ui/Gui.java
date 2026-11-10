@@ -120,6 +120,17 @@ public final class Gui {
         if(Desktop.isDesktopSupported()&&Desktop.getDesktop().isSupported(Desktop.Action.OPEN))Desktop.getDesktop().open(f);
         else throw new IOException("Abre manualmente: "+f.getAbsolutePath());
     }
+    public static void abrirPdfGuardado(Component padre,File archivo) {
+        try {
+            abrir(archivo);
+        }
+        catch(IOException | UnsupportedOperationException | SecurityException e) {
+            JOptionPane.showMessageDialog(padre,
+                "El PDF se guardó, pero no se pudo abrir automáticamente.\n"
+                +"Puedes abrirlo manualmente en:\n"+archivo.getAbsolutePath(),
+                "PDF guardado",JOptionPane.WARNING_MESSAGE);
+        }
+    }
     public static JTextArea texto() {
         var t=new JTextArea();
         t.setEditable(false);

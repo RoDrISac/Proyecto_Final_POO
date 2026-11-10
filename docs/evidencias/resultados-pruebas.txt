@@ -1,6 +1,6 @@
-EJECUCIÓN REAL: 2026-11-08T21:00:45.508786500-05:00[America/Lima]
+EJECUCIÓN REAL: 2026-11-09T19:12:28.585574400-05:00[America/Lima]
 Java: 24.0.1
-Datos aislados: C:\Users\Rodrigo\AppData\Local\Packages\openai.codex_2p2nqsd0c76g0\AC\#!sandbox.{1472ec85-c04f-475a-b233-3530c1ef6ae6}\Temp\colores-t3-test-17398263590735953866
+Datos aislados: C:\Users\Rodrigo\AppData\Local\Packages\openai.codex_2p2nqsd0c76g0\AC\#!sandbox.{237dc061-00e2-47a3-bde6-98c2a846cdd9}\Temp\colores-t3-test-16955590000360169569
 
 PASS | PA01a - Sesión requerida
 PASS | PA01b - Credenciales inválidas
@@ -18,6 +18,8 @@ PASS | PA05c - Correo inválido
 PASS | PA06a - RF40 venta sin stock
 PASS | PA06b - Rechazo sin efectos parciales
 PASS | PA06c - Carrito vacío
+PASS | PA06d - Solo boleta
+PASS | PA06e - Tipo rechazado sin cambios
 PASS | PA07 - RF09/RF38/RF42/RF43/RF44 total, pago y stock
 PASS | PA08 - RF15 alerta stock bajo
 PASS | PA09 - RF25 PDF generado
@@ -59,5 +61,5 @@ PASS | PA31 - RF18 contenido y saldo
 PASS | PA32 - Reportes automáticos del día y mes
 PASS | PA33 - Polimorfismo Persona
 
-TOTAL: 56 verificaciones aprobadas; 0 fallos.
+TOTAL: 58 verificaciones aprobadas; 0 fallos.
 No incluye prueba de impresora física ni lector físico.

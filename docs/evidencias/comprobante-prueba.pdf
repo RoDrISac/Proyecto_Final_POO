@@ -9,40 +9,55 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
 endobj
 4 0 obj
-<< /Length 1195 >>
+<< /Length 3050 >>
 stream
-BT
-/F1 10 Tf
-13 TL
-45 800 Td
-(==========================================================) Tj T*
-(                  COLORES Y CREACIONES) Tj T*
-(            Productos artesanales - Cajamarca) Tj T*
-(==========================================================) Tj T*
-(BOLETA DE VENTA  N° B001-0001) Tj T*
-(Fecha de emision: 08/11/2026 21:00) Tj T*
-(Venta: V0001   Vendedor: Admin Principal) Tj T*
-() Tj T*
-(Cliente:   Cliente Prueba) Tj T*
-(DNI:       12345678) Tj T*
-(Direccion: Dirección de prueba) Tj T*
-(----------------------------------------------------------) Tj T*
-(Producto                   Cant.   P. Unit.      Importe) Tj T*
-(----------------------------------------------------------) Tj T*
-(Producto histórico            12      12,50       150,00) Tj T*
-(----------------------------------------------------------) Tj T*
-(                              Op. gravada  S/       127,12) Tj T*
-(                                IGV \(18%\)  S/        22,88) Tj T*
-(                                    TOTAL  S/       150,00) Tj T*
-() Tj T*
-(Metodo de pago: Yape) Tj T*
-(==========================================================) Tj T*
-(               Gracias por su preferencia) Tj T*
-ET
+0.106 0.180 0.220 rg 0 724 595 118 re f
+BT /F3 21 Tf 1 1 1 rg 40 792 Td (COLORES Y CREACIONES) Tj ET
+BT /F2 10 Tf 0.55 0.84 0.75 rg 40 765 Td (REPORTES Y COMPROBANTES) Tj ET
+0.55 0.84 0.75 rg 40 742 44 3 re f
+0.955 0.965 0.968 rg 36 693 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 699 Td (==========================================================) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 681 Td (                  COLORES Y CREACIONES) Tj ET
+0.955 0.965 0.968 rg 36 657 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 663 Td (            Productos artesanales - Cajamarca) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 645 Td (==========================================================) Tj ET
+0.955 0.965 0.968 rg 36 621 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 627 Td (BOLETA DE VENTA  N° B001-0001) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 609 Td (Fecha de emision: 09/11/2026 19:12) Tj ET
+0.955 0.965 0.968 rg 36 585 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 591 Td (Venta: V0001   Vendedor: Admin Principal) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 573 Td () Tj ET
+0.955 0.965 0.968 rg 36 549 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 555 Td (Cliente:   Cliente Prueba) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 537 Td (DNI:       12345678) Tj ET
+0.955 0.965 0.968 rg 36 513 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 519 Td (Direccion: Dirección de prueba) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 501 Td (----------------------------------------------------------) Tj ET
+0.955 0.965 0.968 rg 36 477 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 483 Td (Producto                   Cant.   P. Unit.      Importe) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 465 Td (----------------------------------------------------------) Tj ET
+0.955 0.965 0.968 rg 36 441 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 447 Td (Producto histórico            12      12,50       150,00) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 429 Td (----------------------------------------------------------) Tj ET
+0.955 0.965 0.968 rg 36 405 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 411 Td (                              Op. gravada  S/       127,12) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 393 Td (                                IGV \(18%\)  S/        22,88) Tj ET
+0.955 0.965 0.968 rg 36 369 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 375 Td (                                    TOTAL  S/       150,00) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 357 Td () Tj ET
+0.955 0.965 0.968 rg 36 333 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 339 Td (Metodo de pago: Yape) Tj ET
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 321 Td (==========================================================) Tj ET
+0.955 0.965 0.968 rg 36 297 523 20 re f
+BT /F1 10 Tf 0.106 0.180 0.220 rg 43 303 Td (               Gracias por su preferencia) Tj ET
+0.80 0.85 0.85 rg 40 52 515 1 re f
+BT /F2 9 Tf 0.36 0.44 0.47 rg 40 35 Td (Colores y Creaciones | Gestión comercial) Tj ET
+BT /F2 9 Tf 0.36 0.44 0.47 rg 475 35 Td (Página 1 de 1) Tj ET
+
 endstream
 endobj
 5 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >> /F3 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >> >> >> /Contents 4 0 R >>
 endobj
 xref
 0 6
@@ -51,9 +66,9 @@ xref
 0000000058 00000 n 
 0000000116 00000 n 
 0000000211 00000 n 
-0000001458 00000 n 
+0000003313 00000 n 
 trailer
 << /Size 6 /Root 1 0 R >>
 startxref
-1584
+3616
 %%EOF

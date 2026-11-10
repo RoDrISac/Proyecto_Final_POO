@@ -37,6 +37,8 @@ public final class PruebasAceptacion {
         rechaza("PA06a - RF40 venta sin stock",()->s.ventas.confirmar("CTEST",Map.of("PTEST",15),"Yape","Boleta"));
         verificar("PA06b - Rechazo sin efectos parciales",s.consultar().ventas.isEmpty()&&s.consultar().productos.get(0).getStock()==14);
         rechaza("PA06c - Carrito vacío",()->s.ventas.confirmar("CTEST",Map.of(),"Yape","Boleta"));
+        rechaza("PA06d - Solo boleta",()->s.ventas.confirmar("CTEST",Map.of("PTEST",1),"Yape","Recibo"));
+        verificar("PA06e - Tipo rechazado sin cambios",s.consultar().ventas.isEmpty()&&s.consultar().productos.get(0).getStock()==14);
         var v=s.ventas.confirmar("CTEST",Map.of("PTEST",12),"Yape","Boleta");
         verificar("PA07 - RF09/RF38/RF42/RF43/RF44 total, pago y stock",v.getMontoTotal()==150&&v.getMetodoPago().equals("Yape")&&s.consultar().productos.get(0).getStock()==2);
         verificar("PA08 - RF15 alerta stock bajo",s.consultar().productos.get(0).tieneStockBajo());
@@ -45,7 +47,7 @@ public final class PruebasAceptacion {
         var comp=new Comprobante(v);verificar("PA10 - RF39 desglose IGV",comp.generarLineas().stream().anyMatch(l->l.contains("IGV (18%)")));
         s.inventario.guardar(producto("PTEST","Nombre nuevo",2,20),false);
         verificar("PA11 - RF07 edición sin alterar historia",s.consultar().ventas.get(0).getDetalles().get(0).getProducto().getNombre().equals("Producto histórico"));
-        var v2=s.ventas.confirmar("CTEST",Map.of("PTEST",1),"Efectivo","Recibo");
+        var v2=s.ventas.confirmar("CTEST",Map.of("PTEST",1),"Efectivo","Boleta");
         verificar("PA12 - RF27 numeración única",!new Comprobante(v).getIdComprobante().equals(new Comprobante(v2).getIdComprobante()));
         s.inventario.eliminar("PTEST");verificar("PA13 - RF08 baja conserva ventas",s.consultar().productos.isEmpty()&&s.consultar().ventas.size()==2);
         var recargado=new Sistema(new RepositorioArchivo(archivo));recargado.ingresar("U001","1234");
@@ -74,11 +76,11 @@ public final class PruebasAceptacion {
         String detalle=String.join("\n",new Comprobante(v).generarLineas()).replace(',','.');
         verificar("PA26 - RF39 cálculo exacto IGV incluido",detalle.contains("127.12")&&detalle.contains("22.88")&&detalle.contains("150.00"));
         recargado.inventario.guardar(producto("DECIMAL","Decimal",10,0.10),true);
-        var decimal=recargado.ventas.confirmar("CTEST",Map.of("DECIMAL",3),"Plin","Recibo");
+        var decimal=recargado.ventas.confirmar("CTEST",Map.of("DECIMAL",3),"Plin","Boleta");
         verificar("PA27 - RF38 precisión monetaria",decimal.getMontoTotal()==0.30);
         var cesta=new LinkedHashMap<String,Integer>();cesta.put("DECIMAL",1);cesta.put("INEXISTENTE",1);
         int cantidadAntes=recargado.consultar().ventas.size();
-        rechaza("PA28a - RF40 carrito parcialmente inválido",()->recargado.ventas.confirmar("CTEST",cesta,"Plin","Recibo"));
+        rechaza("PA28a - RF40 carrito parcialmente inválido",()->recargado.ventas.confirmar("CTEST",cesta,"Plin","Boleta"));
         verificar("PA28b - Venta rechazada sin descuento parcial",recargado.consultar().productos.get(0).getStock()==7&&recargado.consultar().ventas.size()==cantidadAntes);
         Estado actual=recargado.consultar();Repositorio fallaVenta=new Repositorio(){public Estado cargar(){return actual.copia();}public void guardar(Estado e)throws IOException{throw new IOException("Fallo de disco simulado");}};
         var sv=new Sistema(fallaVenta);sv.ingresar("U001","1234");boolean falloVenta=false;try{sv.ventas.confirmar("CTEST",Map.of("DECIMAL",1),"Yape","Boleta");}catch(IOException ex){falloVenta=true;}

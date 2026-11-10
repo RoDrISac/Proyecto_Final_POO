@@ -8,13 +8,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 /**
-* Genera un PDF simple (texto en fuente Courier, hoja A4) sin librerias externas.
+* Genera documentos A4 con encabezado, filas destacadas y numeración.
 * Se usa para los comprobantes y para exportar reportes.
 *
 * @author Rodrigo
 */
 public class ArchivoPDF {
-    private static final int LINEAS_POR_PAGINA = 55;
+    private static final int LINEAS_POR_PAGINA = 34;
     private static final Charset WIN_ANSI = Charset.forName("windows-1252");
     public static void escribir(File archivo, List<String> lineas) throws IOException {
         List<String> ajustadas = new ArrayList<>();
@@ -49,18 +49,35 @@ public class ArchivoPDF {
         posiciones.add(out.size());
         ascii(out, "3 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>\nendobj\n");
         for (int i = 0;  i < paginas.size();  i++) {
-            StringBuilder texto = new StringBuilder("BT\n/F1 10 Tf\n13 TL\n45 800 Td\n");
+            StringBuilder texto = new StringBuilder();
+            rectangulo(texto,0,724,595,118,"0.106 0.180 0.220");
+            rotulo(texto,"COLORES Y CREACIONES",40,792,"F3",21,"1 1 1");
+            rotulo(texto,"REPORTES Y COMPROBANTES",40,765,"F2",10,"0.55 0.84 0.75");
+            rectangulo(texto,40,742,44,3,"0.55 0.84 0.75");
+            int y=699;
+            int fila=0;
             for (String linea : paginas.get(i)) {
-                texto.append('(').append(escapar(linea)).append(") Tj T*\n");
+                boolean cabecera=linea.startsWith("Cod.") || linea.startsWith("Fecha y hora |");
+                boolean alerta=linea.stripTrailing().endsWith(" *");
+                boolean resumen=linea.startsWith("Productos listados:") || linea.startsWith("Ventas:");
+                if(cabecera)rectangulo(texto,36,y-6,523,20,"0.086 0.412 0.369");
+                else if(alerta)rectangulo(texto,36,y-6,523,20,"1 0.945 0.820");
+                else if(resumen)rectangulo(texto,36,y-6,523,20,"0.87 0.94 0.92");
+                else if(!linea.isBlank() && fila%2==0)rectangulo(texto,36,y-6,523,20,"0.955 0.965 0.968");
+                rotulo(texto,linea,43,y,"F1",10,cabecera?"1 1 1":alerta?"0.48 0.28 0.06":"0.106 0.180 0.220");
+                y-=18;
+                fila++;
             }
-            texto.append("ET");
+            rectangulo(texto,40,52,515,1,"0.80 0.85 0.85");
+            rotulo(texto,"Colores y Creaciones | Gestión comercial",40,35,"F2",9,"0.36 0.44 0.47");
+            rotulo(texto,"Página "+(i+1)+" de "+paginas.size(),475,35,"F2",9,"0.36 0.44 0.47");
             byte[] contenido = texto.toString().getBytes(WIN_ANSI);
             posiciones.add(out.size());
             ascii(out, (4 + 2 * i) + " 0 obj\n<< /Length " + contenido.length + " >>\nstream\n");
             out.write(contenido);
             ascii(out, "\nendstream\nendobj\n");
             posiciones.add(out.size());
-            ascii(out, (5 + 2 * i) + " 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] "                     + "/Resources << /Font << /F1 3 0 R >> >> /Contents " + (4 + 2 * i) + " 0 R >>\nendobj\n");
+            ascii(out, (5 + 2 * i) + " 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] "                     + "/Resources << /Font << /F1 3 0 R /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >> /F3 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >> >> >> /Contents " + (4 + 2 * i) + " 0 R >>\nendobj\n");
         }
         int inicioXref = out.size();
         StringBuilder xref = new StringBuilder("xref\n0 " + (posiciones.size() + 1) + "\n0000000000 65535 f \n");
@@ -73,6 +90,13 @@ public class ArchivoPDF {
         try (FileOutputStream fos = new FileOutputStream(archivo)) {
             out.writeTo(fos);
         }
+    }
+    private static void rectangulo(StringBuilder b,int x,int y,int w,int h,String color) {
+        b.append(color).append(" rg ").append(x).append(' ').append(y).append(' ').append(w).append(' ').append(h).append(" re f\n");
+    }
+    private static void rotulo(StringBuilder b,String valor,int x,int y,String fuente,int tam,String color) {
+        b.append("BT /").append(fuente).append(' ').append(tam).append(" Tf ").append(color).append(" rg ")
+            .append(x).append(' ').append(y).append(" Td (").append(escapar(valor)).append(") Tj ET\n");
     }
     private static void ascii(ByteArrayOutputStream out, String texto) throws IOException {
         out.write(texto.getBytes(StandardCharsets.ISO_8859_1));
