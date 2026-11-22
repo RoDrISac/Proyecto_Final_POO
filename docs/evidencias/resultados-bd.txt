@@ -1,0 +1,16 @@
+﻿PASS | Conexion JDBC a jdbc:mysql://localhost:3306/colores_creaciones?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&connectTimeout=5000
+PASS | Carga: 3 roles, 3 usuarios, 7 clientes, 6 productos, 8 ventas, 24 movimientos
+PASS | INSERT cliente CPRUEBA
+PASS | UPDATE telefono del cliente
+PASS | DELETE cliente CPRUEBA
+PASS | SELECT con filtro: PPRUEBA aparece en stock bajo
+PASS | DELETE producto PPRUEBA
+PASS | SELECT ventas por periodo con JOIN a detalle_venta
+PASS | ROLLBACK: un error deja la BD sin cambios
+PASS | INSERT/UPDATE desde el sistema: produccion (+4) y venta (-1) quedan en productos
+PASS | Produccion y sus consumos de materia prima guardados (operaciones_produccion + consumos_materia)
+PASS | Pedido con su detalle personalizado guardado (pedidos + detalle_pedido)
+PASS | Venta con descuento recuperada con el mismo total
+PASS | Auditoria guardada en la tabla auditoria
+PASS | UPDATE del estado del pedido verificado con SELECT + JOIN
+TOTAL PASS: 15

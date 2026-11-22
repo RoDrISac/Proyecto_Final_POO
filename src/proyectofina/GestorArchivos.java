@@ -1,4 +1,5 @@
 package proyectofina;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,18 +14,21 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 /**
-* Manejo de archivos (S09): guarda y carga usuarios, clientes, inventario y ventas
-* en archivos de texto separados por ";" dentro de la carpeta "datos".
-*
-* @author Rodrigo
-*/
+ * Manejo de archivos (S09): guarda y carga usuarios, clientes, inventario y ventas
+ * en archivos de texto separados por ";" dentro de la carpeta "datos".
+ *
+ * @author Rodrigo
+ */
 public class GestorArchivos {
     public static final String CARPETA_DATOS = System.getProperty("app.datos", "datos");
     public static final String CARPETA_COMPROBANTES = CARPETA_DATOS + File.separator + "comprobantes";
     public static final String CARPETA_REPORTES = CARPETA_DATOS + File.separator + "reportes";
     private static final String SEP = ";";
     private static final Set<String> respaldados = new HashSet<>();
+
+    /** Crea las carpetas de datos, comprobantes y reportes si no existen. */
     public static void crearCarpetas() {
         new File(CARPETA_COMPROBANTES).mkdirs();
         new File(CARPETA_REPORTES).mkdirs();
@@ -33,10 +37,12 @@ public class GestorArchivos {
     public static void guardarUsuarios(List<Usuario> usuarios) throws IOException {
         List<String> lineas = new ArrayList<>();
         for (Usuario u : usuarios) {
-            lineas.add(unir(u.getIdUsuario(), u.getNombre(), u.getApellido(), u.getDni(),                     u.getRol().getNombreRol(), u.getContraseña()));
+            lineas.add(unir(u.getIdUsuario(), u.getNombre(), u.getApellido(), u.getDni(), u.getRol().getNombreRol(), u.getContraseña()));
         }
         escribirLineas(archivo("usuarios.csv"), lineas);
     }
+
+    /** Lee usuarios.csv (versión 1.x) y les asigna su rol. */
     public static List<Usuario> cargarUsuarios(List<Rol> roles) throws IOException {
         List<Usuario> usuarios = new ArrayList<>();
         for (String[] c : leer("usuarios.csv", 6)) {
@@ -53,10 +59,13 @@ public class GestorArchivos {
     public static void guardarClientes(List<Cliente> clientes) throws IOException {
         List<String> lineas = new ArrayList<>();
         for (Cliente c : clientes) {
-            lineas.add(unir(c.getIdCliente(), c.getNombre(), c.getApellido(), c.getDni(),                     c.getDireccion(), c.getTelefono(), c.getCorreoElectronico()));
+            lineas.add(unir(c.getIdCliente(), c.getNombre(), c.getApellido(), c.getDni(), c.getDireccion(),
+                    c.getTelefono(), c.getCorreoElectronico()));
         }
         escribirLineas(archivo("clientes.csv"), lineas);
     }
+
+    /** Lee clientes.csv (versión 1.x). */
     public static List<Cliente> cargarClientes() throws IOException {
         List<Cliente> clientes = new ArrayList<>();
         for (String[] c : leer("clientes.csv", 7)) {
@@ -68,15 +77,22 @@ public class GestorArchivos {
     public static void guardarInventario(List<Inventario> inventario) throws IOException {
         List<String> lineas = new ArrayList<>();
         for (Inventario p : inventario) {
-            lineas.add(unir(p.getIdProducto(), p.getNombre(), p.getModelo(), p.getCategoria(),                     String.valueOf(p.getPrecio()), p.getDescripcion(), String.valueOf(p.getStock()),                     String.valueOf(p.getStockMinimo()), String.valueOf(p.getCosto()),                     String.valueOf(p.getFechaIngreso().getTime())));
+            lineas.add(unir(p.getIdProducto(), p.getNombre(), p.getModelo(), p.getCategoria(),
+                    String.valueOf(p.getPrecio()), p.getDescripcion(), String.valueOf(p.getStock()),
+                    String.valueOf(p.getStockMinimo()), String.valueOf(p.getCosto()),
+                    String.valueOf(p.getFechaIngreso().getTime())));
         }
         escribirLineas(archivo("inventario.csv"), lineas);
     }
+
+    /** Lee inventario.csv (versión 1.x). */
     public static List<Inventario> cargarInventario() throws IOException {
         List<Inventario> inventario = new ArrayList<>();
         for (String[] c : leer("inventario.csv", 10)) {
             try {
-                inventario.add(new Inventario(c[0], c[1], c[2], c[3], Double.parseDouble(c[4]), c[5],                         Integer.parseInt(c[6]), Integer.parseInt(c[7]), Double.parseDouble(c[8]),                         new Date(Long.parseLong(c[9]))));
+                inventario.add(new Inventario(c[0], c[1], c[2], c[3], Double.parseDouble(c[4]), c[5],
+                        Integer.parseInt(c[6]), Integer.parseInt(c[7]), Double.parseDouble(c[8]),
+                        new Date(Long.parseLong(c[9]))));
             }
             catch (IllegalArgumentException e) {
                 // incluye NumberFormatException
@@ -92,12 +108,17 @@ public class GestorArchivos {
             List<String> items = new ArrayList<>();
             for (int i = 0;  i < v.getProductosVendidos().size();  i++) {
                 Producto p = v.getProductosVendidos().get(i);
-                items.add(p.getIdProducto() + ":" + limpiarItem(p.getNombre()) + ":"                         + v.getCantidades().get(i) + ":" + v.getPreciosUnitarios().get(i));
+                items.add(p.getIdProducto() + ":" + limpiarItem(p.getNombre()) + ":" + v.getCantidades().get(i)
+                        + ":" + v.getPreciosUnitarios().get(i));
             }
-            lineas.add(unir(v.getIdVenta(), String.valueOf(v.getFecha().getTime()), v.getCliente().getIdCliente(),                     v.getVendedor().getIdUsuario(), v.getMetodoPago(), v.getTipoComprobante(), v.getEstado())                     + SEP + String.join("|", items));
+            lineas.add(unir(v.getIdVenta(), String.valueOf(v.getFecha().getTime()), v.getCliente().getIdCliente(),
+                    v.getVendedor().getIdUsuario(), v.getMetodoPago(), v.getTipoComprobante(), v.getEstado())
+                    + SEP + String.join("|", items));
         }
         escribirLineas(archivo("ventas.csv"), lineas);
     }
+
+    /** Lee ventas.csv (versión 1.x) y reconstruye cada venta con sus detalles. */
     public static List<Venta> cargarVentas(List<Cliente> clientes, List<Usuario> usuarios, List<Inventario> inventario) throws IOException {
         List<Venta> ventas = new ArrayList<>();
         for (String[] c : leer("ventas.csv", 8)) {
@@ -142,6 +163,8 @@ public class GestorArchivos {
             bw.write(texto);
         }
     }
+
+    /** Escribe un archivo de texto línea por línea en UTF-8. */
     private static void escribirLineas(File archivo, List<String> lineas) throws IOException {
         archivo.getParentFile().mkdirs();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, StandardCharsets.UTF_8))) {
@@ -151,6 +174,8 @@ public class GestorArchivos {
             }
         }
     }
+
+    /** Lee las líneas no vacías de un archivo CSV; si no existe devuelve una lista vacía. */
     private static List<String[]> leer(String nombre, int columnas) throws IOException {
         List<String[]> filas = new ArrayList<>();
         File archivo = archivo(nombre);
@@ -176,6 +201,8 @@ public class GestorArchivos {
         }
         return filas;
     }
+
+    /** Ruta de un archivo dentro de la carpeta de datos. */
     private static File archivo(String nombre) {
         return new File(CARPETA_DATOS, nombre);
     }
@@ -206,6 +233,8 @@ public class GestorArchivos {
         }
         return String.join(SEP, limpios);
     }
+
+    /** Busca un rol por nombre. */
     private static Rol buscarRol(List<Rol> roles, String nombre) {
         for (Rol r : roles) {
             if (r.getNombreRol().equals(nombre)) {
@@ -214,6 +243,8 @@ public class GestorArchivos {
         }
         return null;
     }
+
+    /** Busca un cliente por código. */
     private static Cliente buscarCliente(List<Cliente> clientes, String id) {
         for (Cliente c : clientes) {
             if (c.getIdCliente().equals(id)) {
@@ -222,6 +253,8 @@ public class GestorArchivos {
         }
         return null;
     }
+
+    /** Busca un usuario por código. */
     private static Usuario buscarUsuario(List<Usuario> usuarios, String id) {
         for (Usuario u : usuarios) {
             if (u.getIdUsuario().equals(id)) {
@@ -230,6 +263,8 @@ public class GestorArchivos {
         }
         return null;
     }
+
+    /** Busca un producto por código. */
     private static Inventario buscarProducto(List<Inventario> inventario, String id) {
         for (Inventario p : inventario) {
             if (p.getIdProducto().equals(id)) {

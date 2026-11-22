@@ -1,4 +1,6 @@
 *.pdf binary
 *.png binary
+*.bak binary
 *.jar binary
-*.cmd text eol=crlf
+*.dat binary
+*.docx binary

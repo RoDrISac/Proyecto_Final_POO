@@ -1,4 +1,4 @@
-Ejecución: 2026-11-08T21:00:51.177845800-05:00[America/Lima]
+Ejecución: 2026-11-23T20:07:33.544370400-05:00[America/Lima]
 Imágenes renderizadas por printAll de componentes Swing reales (no fotografías del escritorio).
 Datos ficticios aislados.
 PASS | Render Swing: 01-acceso
