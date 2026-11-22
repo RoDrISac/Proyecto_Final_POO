@@ -1,0 +1,18 @@
+Ejecucion: 2026-11-23T20:07:39.723559-05:00[America/Lima]
+Imagenes de componentes Swing reales (printAll) con los datos de demostracion del taller de ceramica.
+PASS | Pantalla 01-acceso
+PASS | Pantalla 02-resumen
+PASS | Pantalla 03-inventario
+PASS | Pantalla 04-materias-primas
+PASS | Pantalla 05-produccion
+PASS | Pantalla 06-pedidos
+PASS | Pantalla 07-clientes
+PASS | Pantalla 08-venta
+PASS | Pantalla 09-historial
+PASS | Pantalla 10-reportes
+PASS | Pantalla 11-usuarios
+PASS | Pantalla 12-auditoria
+PASS | Vendedor: ve Pedidos y Ventas; no ve Producción, Usuarios ni Auditoría
+PASS | Pantalla 13-rol-vendedor
+PASS | Supervisor de almacén: ve Producción y Materias primas; no ve Nueva venta ni Usuarios
+PASS | Pantalla 14-rol-supervisor-produccion

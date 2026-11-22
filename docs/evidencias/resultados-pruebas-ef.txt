@@ -1,0 +1,42 @@
+﻿PASS | EF01 - RF02 registrar materia prima
+PASS | EF02 - RF02 codigo de materia duplicado  (Ya existe una materia prima con el c�digo MP09.)
+PASS | EF03 - RF02 costo negativo  (El importe debe estar entre 0 y 1 000 000.)
+PASS | EF04 - Compra suma stock y promedia costo (4 a 30 + 4 a 40 = 35)
+PASS | EF05 - RF03 producir descuenta materia prima de la receta (10 x 1.2 kg)
+PASS | EF06 - RF11 solo las aprobadas ingresan al inventario
+PASS | EF07 - RF05 costo del lote = materiales + mano de obra
+PASS | EF08 - RF05 costo por pieza = lote / aprobadas
+PASS | EF09 - RF11 rechazo sin observacion  (Indica por qu� se rechazaron piezas en la revisi�n de calidad.)
+PASS | EF10 - RF03 materia prima insuficiente no produce  (Materia prima insuficiente: Arcilla roja de Cajamarca. Disponible: 140.4 kg, se necesitan 2500.)
+PASS | EF11 - Rechazo sin efectos parciales
+PASS | EF12 - RF04 falla descuenta materia prima (2 x 0.7 kg de gas)
+PASS | EF13 - Polimorfismo: FallaProduccion.getTipo() = FALLA
+PASS | EF14 - RF14 el pedido compromete stock
+PASS | EF15 - RF14 no se vende stock comprometido  (Stock insuficiente para Taza artesanal con asa. Disponible para vender: 10 (hay 30 comprometidas en pedidos))
+PASS | EF16 - Pedido con entrega pasada  (La fecha de entrega no puede ser anterior a hoy.)
+PASS | EF17 - RF12 no se entrega sin revision de calidad  (El pedido debe aprobar la revisi�n de calidad antes de entregarse.)
+PASS | EF18 - RF12 observacion obligatoria si no cumple  (Indica qu� detalle del dise�o no se cumple.)
+PASS | EF19 - Entregar pedido genera la venta y descuenta stock
+PASS | EF20 - Calidad no aprueba si falta producir  (A�n no hay stock suficiente de Vasija tradicional cajamarquina para este pedido. Registra la producci�n primero.)
+PASS | EF21 - Cancelar libera el stock comprometido
+PASS | EF22 - Descuento 10 % (10 x 18 = 180 -> 162)
+PASS | EF23 - Descuento mayor al 30 %  (El descuento debe estar entre 0 % y 30 %.)
+PASS | EF24 - RF41 boleta sin datos del cliente
+PASS | EF25 - RF41 recibo exige cliente identificado  (El recibo necesita los datos del cliente. Usa boleta para clientes varios.)
+PASS | EF26 - Numeracion R001 para recibos y B001 para boletas
+PASS | EF27 - S06 registrar y editar categoria del cliente
+PASS | EF28 - No se elimina un cliente con compras  (El cliente tiene compras o pedidos registrados; no se puede eliminar.)
+PASS | EF29 - RF22 no se cierra un mes futuro  (No se puede cerrar un mes futuro.)
+PASS | EF30 - RF24 no se vende en un mes cerrado  (El mes 2026-11 tiene la contabilidad cerrada; no se pueden registrar operaciones.)
+PASS | EF31 - RF24 no se produce en un mes cerrado  (El mes 2026-11 tiene la contabilidad cerrada; no se pueden registrar operaciones.)
+PASS | EF32 - Un mes no se cierra dos veces  (El mes 2026-11 ya estaba cerrado.)
+PASS | EF33 - RF31 auditoria registra quien, que y cuando
+PASS | EF34 - S10 asignar rol exige la contrasena del rol  (La contrase�a del rol Vendedor es incorrecta.)
+PASS | EF35 - S10 rol asignado con su contrasena
+PASS | EF36 - RF30 vendedor no registra produccion  (Tu rol no tiene permiso para esta operaci�n.)
+PASS | EF37 - RF30 vendedor no ve la auditoria  (Tu rol no tiene permiso para esta operaci�n.)
+PASS | EF38 - RF30 supervisor no registra pedidos  (Tu rol no tiene permiso para esta operaci�n.)
+PASS | EF39 - RF28 correo sin configurar avisa  (El envio por correo no est� configurado. Completa usuario y clave en C:\Users\Rodrigo\Documents\NetBeansProjects\Proyecto_Final_POO\no-existe.properties (ver manual de instalaci�n).)
+PASS | EF40 - RF28 valida el correo del destinatario
+PASS | EF41 - Se recuperan producciones, pedidos, auditoria y cierres
+TOTAL PASS: 41

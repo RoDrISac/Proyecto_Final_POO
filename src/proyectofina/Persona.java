@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package proyectofina;
 
 /**
@@ -9,21 +5,25 @@ package proyectofina;
  *
  * @author Rodrigo
  */
-public abstract class Persona {
+public abstract class Persona implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private String apellido;
     private String dni;
 
+    /** Datos de identidad comunes a usuarios y clientes. */
     public Persona(String nombre, String apellido, String dni) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
     }
 
+    /** Texto de la persona; las clases hijas lo sobrescriben (polimorfismo). */
     public String mostrarPersona() {
         return nombre + " " + apellido + " (DNI " + dni + ")";
     }
 
+    // ---------- Getters y setters ----------
     public String getNombreCompleto() {
         return nombre + " " + apellido;
     }

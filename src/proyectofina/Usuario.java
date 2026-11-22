@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package proyectofina;
 
 /**
@@ -14,6 +10,7 @@ public class Usuario extends Persona {
     private Rol rol;
     private String contraseña;
 
+    /** Usuario del sistema con su rol. */
     public Usuario(String idUsuario, String nombre, String apellido, String dni, Rol rol, String contraseña) {
         super(nombre, apellido, dni);
         this.idUsuario = idUsuario;
@@ -21,19 +18,23 @@ public class Usuario extends Persona {
         this.contraseña = contraseña;
     }
 
+    /** Compara la contraseña ingresada al iniciar sesión. */
     public boolean validarAcceso(String contraseña) {
         return this.contraseña != null && this.contraseña.equals(contraseña);
     }
 
+    /** Asigna otro rol (la contraseña del rol se valida en UsuariosServicio). */
     public void cambiarRol(Rol nuevoRol) {
         this.rol = nuevoRol;
     }
 
+    /** Sobrescribe Persona.mostrarPersona() agregando código y rol (polimorfismo). */
     @Override
     public String mostrarPersona() {
         return idUsuario + " - " + super.mostrarPersona() + " | Rol: " + rol.getNombreRol();
     }
 
+    // ---------- Getters y setters ----------
     public String getIdUsuario() {
         return idUsuario;
     }

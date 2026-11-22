@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package proyectofina;
 
 import java.util.List;
@@ -11,30 +7,39 @@ import java.util.List;
  *
  * @author Alvaro
  */
-public class Rol {
+public class Rol implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private String nombreRol;
     private List<String> permiso;
     private String contraseñaRol;
 
+    /** Rol con sus permisos y la contraseña que se pide para asignarlo. */
     public Rol(String nombreRol, List<String> permiso, String contraseñaRol) {
         this.nombreRol = nombreRol;
         this.permiso = permiso;
         this.contraseñaRol = contraseñaRol;
     }
 
+    /** Indica si el rol incluye el permiso (INVENTARIO, VENTAS, REPORTES o USUARIOS). */
     public boolean tenerPermiso(String permiso) {
         return this.permiso != null && this.permiso.contains(permiso);
     }
 
+    /** Compara la clave ingresada con la contraseña del rol. */
     public boolean validarContraseñaRol(String clave) {
         return contraseñaRol != null && contraseñaRol.equals(clave);
     }
 
+    // ---------- Getters y setters ----------
     public String getNombreRol() {
         return nombreRol;
     }
 
     public List<String> getPermiso() {
         return permiso;
+    }
+
+    public String getContraseñaRol() {
+        return contraseñaRol;
     }
 }
