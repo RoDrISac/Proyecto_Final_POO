@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package proyectofina;
 
 /**
@@ -9,23 +5,29 @@ package proyectofina;
  *
  * @author Rodrigo
  */
-public class DetalleVenta {
-    private Producto producto;
-    private int cantidad;
-    private double precioUnitario;
+public class DetalleVenta implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
+    private final Producto producto;
+    private final int cantidad;
+    private final double precioUnitario;
 
+    /** Guarda una copia del producto con el precio de ese momento, para que la venta no cambie si después se edita el producto. */
     public DetalleVenta(Producto producto, int cantidad, double precioUnitario) {
-        this.producto = producto;
+        this.producto = new Producto(producto.getIdProducto(), producto.getNombre(), producto.getModelo(),
+                producto.getCategoria(), precioUnitario, producto.getDescripcion());
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
     }
 
+    /** Cantidad por precio unitario. */
     public double calcularSubtotal() {
         return cantidad * precioUnitario;
     }
 
+    // ---------- Getters y setters ----------
     public Producto getProducto() {
-        return producto;
+        return new Producto(producto.getIdProducto(), producto.getNombre(), producto.getModelo(),
+                producto.getCategoria(), precioUnitario, producto.getDescripcion());
     }
 
     public int getCantidad() {

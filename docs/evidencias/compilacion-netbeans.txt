@@ -1,0 +1,5 @@
+PASS | Construcción del proyecto NetBeans con el Apache Ant incluido en NetBeans 25 (ant clean jar).
+Comando: java -jar "C:\Program Files\NetBeans-25\netbeans\extide\ant\lib\ant-launcher.jar" clean jar
+Resultado: BUILD SUCCESSFUL. 62 archivos fuente compilados. Se generó dist/ProyectoFina.jar y se copió el driver a dist/lib/mysql-connector-j-8.4.0.jar.
+JDK: 24 con source/target 17 (configuración del proyecto). Advertencia informativa de javac: se recomienda --release 17; compilar.cmd usa --release 17.
+Fecha: 23/11/2026 08:49

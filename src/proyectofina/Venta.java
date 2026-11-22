@@ -1,79 +1,116 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package proyectofina;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Venta realizada por un vendedor a un cliente. Las tres listas van en paralelo:
- * la posicion i de cada una corresponde al mismo producto vendido.
+ * Venta compuesta por detalles propios. Conserva instantáneas del cliente y vendedor.
  *
  * @author Alvaro
  */
-public class Venta {
+public class Venta implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private String idVenta;
     private Date fecha;
     private String hora;
     private Cliente cliente;
     private Usuario vendedor;
-    private List<Producto> productosVendidos = new ArrayList<>();
-    private List<Integer> cantidades = new ArrayList<>();
-    private List<Double> preciosUnitarios = new ArrayList<>();
+    private final List<DetalleVenta> detalles = new ArrayList<>();
     private int cantidadProductos;
     private double montoTotal;
     private String metodoPago;
     private String tipoComprobante;
     private String estado = "Pendiente";
+    private double descuentoPorcentaje;
 
+    /** Descuento máximo permitido en una venta (alcance S07). */
+    public static final double DESCUENTO_MAXIMO = 30;
+
+    /** Crea la venta guardando copias del cliente y del vendedor (instantáneas históricas). */
     public Venta(String idVenta, Date fecha, Cliente cliente, Usuario vendedor, String metodoPago, String tipoComprobante) {
         this.idVenta = idVenta;
         this.fecha = fecha;
         this.hora = new SimpleDateFormat("HH:mm:ss").format(fecha);
-        this.cliente = cliente;
-        this.vendedor = vendedor;
+        this.cliente = new Cliente(cliente.getIdCliente(), cliente.getNombre(), cliente.getApellido(), cliente.getDni(),
+                cliente.getDireccion(), cliente.getTelefono(), cliente.getCorreoElectronico(), cliente.getCategoria());
+        this.vendedor = new Usuario(vendedor.getIdUsuario(), vendedor.getNombre(), vendedor.getApellido(),
+                vendedor.getDni(), vendedor.getRol(), "");
         this.metodoPago = metodoPago;
         this.tipoComprobante = tipoComprobante;
     }
 
+    /** Agrega una línea de detalle (composición) y recalcula el total. */
     public void agregarProducto(Producto producto, int cantidad, double precio) {
         if (cantidad <= 0) {
             throw new IllegalArgumentException("La cantidad debe ser mayor a cero.");
         }
-        // Se agrega en las tres listas a la vez para que no se desordenen
-        productosVendidos.add(producto);
-        cantidades.add(cantidad);
-        preciosUnitarios.add(precio);
+        if (!Double.isFinite(precio) || precio < 0) {
+            throw new IllegalArgumentException("Precio inválido");
+        }
+        // La venta es dueña de sus detalles: guardan el precio de ese momento
+        detalles.add(new DetalleVenta(producto, cantidad, precio));
         cantidadProductos += cantidad;
         calcularMontoTotal();
     }
 
-    public double calcularMontoTotal() {
-        double suma = 0;
-        for (int i = 0; i < productosVendidos.size(); i++) {
-            suma += cantidades.get(i) * preciosUnitarios.get(i);
+    /** Suma de los subtotales, antes del descuento. */
+    public double calcularSubtotal() {
+        BigDecimal suma = BigDecimal.ZERO;
+        for (DetalleVenta d : detalles) {
+            suma = suma.add(BigDecimal.valueOf(d.getPrecioUnitario()).multiply(BigDecimal.valueOf(d.getCantidad())));
         }
-        montoTotal = suma;
+        return suma.setScale(2, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    /** Importe del descuento sobre el subtotal, redondeado a 2 decimales. */
+    public double calcularDescuento() {
+        return BigDecimal.valueOf(calcularSubtotal() * descuentoPorcentaje / 100.0).setScale(2, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    /** Subtotal menos descuento; se guarda en montoTotal. */
+    public double calcularMontoTotal() {
+        montoTotal = BigDecimal.valueOf(calcularSubtotal())
+                .subtract(BigDecimal.valueOf(calcularDescuento()))
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
         return montoTotal;
+    }
+
+    /** Descuento en porcentaje sobre el subtotal (0 a 30 %). */
+    public void aplicarDescuento(double porcentaje) {
+        if (!Double.isFinite(porcentaje) || porcentaje < 0 || porcentaje > DESCUENTO_MAXIMO) {
+            throw new IllegalArgumentException("El descuento debe estar entre 0 % y " + (int) DESCUENTO_MAXIMO + " %.");
+        }
+        descuentoPorcentaje = porcentaje;
+        calcularMontoTotal();
+    }
+
+    // ---------- Getters y setters ----------
+    public double getDescuentoPorcentaje() {
+        return descuentoPorcentaje;
     }
 
     public int getCantidadProductos() {
         return cantidadProductos;
     }
 
+    /** Texto de la venta con su detalle, descuento y total. */
     public String getResumenVenta() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Venta %s | %s %s | Cliente: %s | Vendedor: %s%n", idVenta,
-                new SimpleDateFormat("dd/MM/yyyy").format(fecha), hora,
-                cliente.getNombreCompleto(), vendedor.getNombreCompleto()));
+                new SimpleDateFormat("dd/MM/yyyy").format(fecha), hora, cliente.getNombreCompleto(),
+                vendedor.getNombreCompleto()));
         for (DetalleVenta d : getDetalles()) {
             sb.append(String.format("   %-22s x%-3d S/ %8.2f = S/ %9.2f%n", d.getProducto().getNombre(),
                     d.getCantidad(), d.getPrecioUnitario(), d.calcularSubtotal()));
+        }
+        if (descuentoPorcentaje > 0) {
+            sb.append(String.format("   Subtotal: S/ %.2f | Descuento %.0f %%: -S/ %.2f%n", calcularSubtotal(),
+                    descuentoPorcentaje, calcularDescuento()));
         }
         sb.append(String.format("   Productos: %d | Total: S/ %.2f | Pago: %s | %s | Estado: %s",
                 cantidadProductos, montoTotal, metodoPago, tipoComprobante, estado));
@@ -101,24 +138,19 @@ public class Venta {
     }
 
     public List<Producto> getProductosVendidos() {
-        return Collections.unmodifiableList(productosVendidos);
+        return detalles.stream().map(DetalleVenta::getProducto).toList();
     }
 
     public List<Integer> getCantidades() {
-        return Collections.unmodifiableList(cantidades);
+        return detalles.stream().map(DetalleVenta::getCantidad).toList();
     }
 
     public List<Double> getPreciosUnitarios() {
-        return Collections.unmodifiableList(preciosUnitarios);
+        return detalles.stream().map(DetalleVenta::getPrecioUnitario).toList();
     }
-
-    // Desglose de la venta: une las tres listas en una linea por producto
+    // Colección inmodificable de detalles.
     public List<DetalleVenta> getDetalles() {
-        List<DetalleVenta> detalles = new ArrayList<>();
-        for (int i = 0; i < productosVendidos.size(); i++) {
-            detalles.add(new DetalleVenta(productosVendidos.get(i), cantidades.get(i), preciosUnitarios.get(i)));
-        }
-        return detalles;
+        return List.copyOf(detalles);
     }
 
     public double getMontoTotal() {

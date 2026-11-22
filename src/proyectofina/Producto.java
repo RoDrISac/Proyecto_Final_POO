@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package proyectofina;
 
 /**
@@ -9,14 +5,26 @@ package proyectofina;
  *
  * @author Alvaro
  */
-public class Producto {
+public class Producto implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private String idProducto;
     private String nombre;
     private String modelo;
     private String categoria;
     private double precio;
     private String descripcion;
+    private String unidad = "Unidad";
 
+    // ---------- Getters y setters ----------
+    public String getUnidad() {
+        return unidad == null ? "Unidad" : unidad;
+    }
+
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
+    }
+
+    /** Crea un producto; el precio se valida en el setter. */
     public Producto(String idProducto, String nombre, String modelo, String categoria, double precio, String descripcion) {
         this.idProducto = idProducto;
         this.nombre = nombre;
@@ -31,12 +39,13 @@ public class Producto {
     }
 
     public void setPrecio(double precio) {
-        if (precio < 0) {
+        if (!Double.isFinite(precio) || precio < 0) {
             throw new IllegalArgumentException("El precio no puede ser negativo.");
         }
         this.precio = precio;
     }
 
+    /** Texto resumido del producto; Inventario lo amplía. */
     public String mostrarInfo() {
         return String.format("%s - %s (modelo %s, %s) S/ %.2f", idProducto, nombre, modelo, categoria, precio);
     }
